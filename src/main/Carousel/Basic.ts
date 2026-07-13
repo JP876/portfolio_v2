@@ -1,31 +1,12 @@
 import gsap from 'gsap';
 
-export type CarouselConfigType = {
-  repeat?: number;
-  paused?: boolean;
-  speed?: number;
-  snap?: number | boolean;
-  paddingRight?: number | string;
-  reversed?: boolean;
-  center?: boolean | HTMLElement | string;
-  onChange?: (el: HTMLElement, index: number) => void;
-  parallax?: boolean;
-};
+import CarouselCore from './Core';
+import type { CarouselConfigType } from './types';
 
-/*
-This class makes a group of elements animate along the x-axis in a seamless, responsive loop.
-Sources: https://gsap.com/docs/v3/HelperFunctions/helpers/seamlessLoop/
-         https://codepen.io/GreenSock/pen/MWXPgKm?editors=0010
-*/
-
-class Carousel {
-  private currentIndex = 0;
-
+class CarouselBasic extends CarouselCore {
   readonly slides: HTMLElement[] | null = null;
-  private config: CarouselConfigType = {};
 
-  tl: GSAPTimeline | null = null;
-  times: number[] = []; // the time it takes for each item to reach the "start" position
+  private config: CarouselConfigType = {};
   private previousIndex: number = 0;
   private length: number | null = null;
   private startX: number = 0;
@@ -33,16 +14,13 @@ class Carousel {
   private xPercents: number[] = [];
   private pixelsPerSecond = 100;
   private spaceBefore: number[] = [];
-  totalWidth: number | null = null;
   private initialContainer: HTMLElement | null = null;
-  container: HTMLElement | null = null;
-  indexIsDirty = false;
-  proxy: HTMLElement | null = null;
 
   private snap = (v: number) => v;
-  timeWrap: ReturnType<typeof gsap.utils.wrap<number>> = (i: number) => i;
 
   constructor(slides: HTMLElement[], container: HTMLElement, config?: CarouselConfigType) {
+    super();
+
     this.slides = slides;
     this.config = config || {};
 
@@ -60,15 +38,6 @@ class Carousel {
     });
   }
 
-  get timeline() {
-    if (!this.tl) return null;
-    return this.tl;
-  }
-
-  get activeSlideIndex() {
-    return this.indexIsDirty ? this.getClosestIndex(true) : this.currentIndex;
-  }
-
   set updateConfig(config: CarouselConfigType) {
     this.config = { ...this.config, ...config };
 
@@ -82,72 +51,7 @@ class Carousel {
     this.refresh(true);
 
     if (this.config.onChange && this.slides) {
-      this.config.onChange(this.slides[this.currentIndex], this.currentIndex);
-    }
-  }
-
-  private slideImgUpdate() {
-    if (!this.slides) {
-      return null;
-    }
-
-    this.slides.forEach((slide) => {
-      const rect = slide.getBoundingClientRect();
-      const prog = gsap.utils.mapRange(-rect.width, innerWidth, 0, 1, rect.x);
-      const val = gsap.utils.clamp(0, 1, prog);
-
-      gsap.set(slide.querySelector('img'), {
-        xPercent: gsap.utils.interpolate(0, -20, val),
-      });
-    });
-  }
-
-  private getTotalWidth() {
-    if (!this.slides || !this.length) {
-      return null;
-    }
-
-    return (
-      this.slides[this.length - 1].offsetLeft +
-      (this.xPercents[this.length - 1] / 100) * this.widths[this.length - 1] -
-      this.startX +
-      this.spaceBefore[0] +
-      this.slides[this.length - 1].offsetWidth * +gsap.getProperty(this.slides[this.length - 1], 'scaleX') +
-      (parseFloat((this.config.paddingRight || '').toString()) || 0)
-    );
-  }
-
-  getClosestIndex(setCurrent?: boolean) {
-    if (!this.tl) {
-      return null;
-    }
-
-    const index = this.getClosest(this.times, this.tl.time(), this.tl.duration());
-    if (setCurrent) {
-      this.currentIndex = index;
-      this.indexIsDirty = false;
-    }
-    return index;
-  }
-
-  refresh(deep?: boolean) {
-    if (!this.tl) {
-      return null;
-    }
-
-    let progress = this.tl.progress();
-    this.tl.progress(0, true);
-
-    this.populateWidths();
-    if (deep) {
-      this.populateTimeline();
-    }
-    this.populateOffsets();
-
-    if (deep && this.tl.paused()) {
-      this.tl.time(this.times[this.currentIndex], true);
-    } else {
-      this.tl.progress(progress, true);
+      this.config.onChange(this.slides[this.activeSlideIndex], this.activeSlideIndex);
     }
   }
 
@@ -175,9 +79,6 @@ class Carousel {
         return null;
       }
 
-      if (this.config.parallax) {
-        this.slideImgUpdate();
-      }
       let i = this.getClosest(this.times, this.tl.time(), this.tl.duration());
 
       if (this.previousIndex !== i) {
@@ -199,6 +100,21 @@ class Carousel {
     });
 
     this.tl = tl;
+  }
+
+  private getTotalWidth() {
+    if (!this.slides || !this.length) {
+      return null;
+    }
+
+    return (
+      this.slides[this.length - 1].offsetLeft +
+      (this.xPercents[this.length - 1] / 100) * this.widths[this.length - 1] -
+      this.startX +
+      this.spaceBefore[0] +
+      this.slides[this.length - 1].offsetWidth * +gsap.getProperty(this.slides[this.length - 1], 'scaleX') +
+      (parseFloat((this.config.paddingRight || '').toString()) || 0)
+    );
   }
 
   private populateWidths() {
@@ -274,23 +190,25 @@ class Carousel {
     this.timeWrap = gsap.utils.wrap(0, this.tl.duration());
   }
 
-  getClosest(values: number[], value: number, wrap: number) {
-    let i = values.length;
-    let closest = 1e10;
-    let index = 0;
-    let d;
-
-    while (i--) {
-      d = Math.abs(values[i] - value);
-      if (d > wrap / 2) {
-        d = wrap - d;
-      }
-      if (d < closest) {
-        closest = d;
-        index = i;
-      }
+  refresh(deep?: boolean) {
+    if (!this.tl) {
+      return null;
     }
-    return index;
+
+    let progress = this.tl.progress();
+    this.tl.progress(0, true);
+
+    this.populateWidths();
+    if (deep) {
+      this.populateTimeline();
+    }
+    this.populateOffsets();
+
+    if (deep && this.tl.paused()) {
+      this.tl.time(this.times[this.activeSlideIndex], true);
+    } else {
+      this.tl.progress(progress, true);
+    }
   }
 
   initialize() {
@@ -308,6 +226,8 @@ class Carousel {
 
       this.populateWidths();
       this.populateTimeline();
+      console.log(this.tl);
+
       this.populateOffsets();
 
       this.tl.progress(1, true).progress(0, true); // pre-render for performance
@@ -317,10 +237,10 @@ class Carousel {
       }
 
       this.getClosestIndex(true);
-      this.previousIndex = this.currentIndex;
+      this.previousIndex = this.activeSlideIndex;
 
       if (this.config.onChange && this.slides) {
-        this.config.onChange(this.slides[this.currentIndex], this.currentIndex);
+        this.config.onChange(this.slides[this.activeSlideIndex], this.activeSlideIndex);
       }
     });
   }
@@ -330,24 +250,24 @@ class Carousel {
       return null;
     }
 
-    if (Math.abs(index - this.currentIndex) > this.length / 2) {
-      index += index > this.currentIndex ? -this.length : this.length; // always go in the shortest direction
+    if (Math.abs(index - this.activeSlideIndex) > this.length / 2) {
+      index += index > this.activeSlideIndex ? -this.length : this.length; // always go in the shortest direction
     }
 
     const newIndex = gsap.utils.wrap(0, this.length, index);
     let time = this.times[newIndex];
 
-    if (time > this.tl.time() !== index > this.currentIndex && index !== this.currentIndex) {
+    if (time > this.tl.time() !== index > this.activeSlideIndex && index !== this.activeSlideIndex) {
       // if we're wrapping the timeline's playhead, make the proper adjustments
       vars.modifiers = { time: gsap.utils.wrap(0, this.tl.duration()) };
-      time += this.tl.duration() * (index > this.currentIndex ? 1 : -1);
+      time += this.tl.duration() * (index > this.activeSlideIndex ? 1 : -1);
     }
 
     if (time < 0 || time > this.tl.duration()) {
       vars.modifiers = { time: this.timeWrap };
     }
 
-    this.currentIndex = newIndex;
+    this.activeSlideIndex = newIndex;
     vars.overwrite = true;
     gsap.killTweensOf(this.proxy);
 
@@ -363,4 +283,4 @@ class Carousel {
   }
 }
 
-export default Carousel;
+export default CarouselBasic;

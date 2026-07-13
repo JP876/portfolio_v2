@@ -1,9 +1,9 @@
 import gsap from 'gsap';
 
 import { GAP } from './consts';
-import DraggableCarousel from './DraggableCarousel';
+import CarouselDraggable from './Carousel/Draggable';
 
-class ProjectGallery extends DraggableCarousel {
+class ProjectGallery extends CarouselDraggable {
   private activeSlide: HTMLElement | null = null;
   private readonly prevBtn: HTMLButtonElement | null = null;
   private readonly nextBtn: HTMLButtonElement | null = null;
@@ -11,7 +11,7 @@ class ProjectGallery extends DraggableCarousel {
   constructor(slides: HTMLElement[], container: HTMLElement, prevBtn: HTMLButtonElement, nextBtn: HTMLButtonElement) {
     super(slides, container, {});
     this.updateConfig = {
-      paused: true,
+      paused: true, // TODO: bug with false, animation stops earlier
       paddingRight: GAP,
       center: true,
       onChange: (slide) => {
@@ -35,6 +35,7 @@ class ProjectGallery extends DraggableCarousel {
     this.initializeDraggable();
 
     this.toIndex(0, { duration: 0 });
+
     if (this.slides) {
       this.slides.forEach((slide, i) => {
         slide.addEventListener('click', () => this.toIndex(i, { duration: 1, ease: 'expo' }));

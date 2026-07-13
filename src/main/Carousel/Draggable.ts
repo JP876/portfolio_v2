@@ -1,11 +1,10 @@
 import gsap from 'gsap';
 import { Draggable } from 'gsap/Draggable';
 
-import Carousel, { type CarouselConfigType } from './Carousel';
+import type { CarouselConfigType } from './types';
+import CarouselBasic from './Basic';
 
-// new Proxy, [Symbol.iterator]
-
-class DraggableCarousel extends Carousel {
+class CarouselDraggable extends CarouselBasic {
   draggable: Draggable | null = null;
   private wrap = gsap.utils.wrap(0, 1);
   private ratio: number = 1;
@@ -16,7 +15,6 @@ class DraggableCarousel extends Carousel {
 
   constructor(slides: HTMLElement[], container: HTMLElement, config?: CarouselConfigType) {
     super(slides, container, config);
-
     if (typeof gsap.plugins.inertia === 'undefined') {
       console.warn('InertiaPlugin required for momentum-based scrolling and snapping.');
     }
@@ -25,10 +23,10 @@ class DraggableCarousel extends Carousel {
   }
 
   private align() {
-    if (!this.timeline || !this.draggable) {
+    if (!this.tl || !this.draggable) {
       return null;
     }
-    const tl = this.timeline.progress(
+    const tl = this.tl.progress(
       this.wrap(this.startProgress + (this.draggable.startX - this.draggable.x) * this.ratio)
     );
     return tl;
@@ -39,7 +37,7 @@ class DraggableCarousel extends Carousel {
   }
 
   initializeDraggable() {
-    if (!this.slides || !this.container || !this.timeline) {
+    if (!this.slides || !this.container || !this.tl) {
       return null;
     }
 
@@ -59,11 +57,11 @@ class DraggableCarousel extends Carousel {
         overshootTolerance: 0,
         inertia: true,
         onPressInit() {
-          gsap.killTweensOf(self.timeline);
+          gsap.killTweensOf(self.tl);
 
-          self.wasPlaying = !self.timeline?.paused();
-          self.timeline?.pause();
-          self.startProgress = self.timeline?.progress() ?? 0;
+          self.wasPlaying = !self.tl?.paused();
+          self.tl?.pause();
+          self.startProgress = self.tl?.progress() ?? 0;
           self.refresh();
           self.ratio = 1 / (self.totalWidth ?? 1);
           self.initChangeX = self.startProgress / -self.ratio - this.x;
@@ -78,8 +76,8 @@ class DraggableCarousel extends Carousel {
         },
         onThrowComplete() {
           self.syncIndex();
-          if (self.wasPlaying && self.timeline) {
-            self.timeline.play();
+          if (self.wasPlaying && self.tl) {
+            self.tl.play();
           }
         },
         snap(value) {
@@ -91,7 +89,7 @@ class DraggableCarousel extends Carousel {
             return self.lastSnap + self.initChangeX;
           }
 
-          const duration = self.timeline?.duration() ?? 1;
+          const duration = self.tl?.duration() ?? 1;
           const time = -(value * self.ratio) * duration;
           const wrappedTime = self.timeWrap(time);
 
@@ -112,4 +110,4 @@ class DraggableCarousel extends Carousel {
   }
 }
 
-export default DraggableCarousel;
+export default CarouselDraggable;

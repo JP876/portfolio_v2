@@ -31,10 +31,8 @@ class RevealText {
       type: 'words',
     });
 
-    const handleCall = (word: Element) => this.animateWord(word);
-
     this.splitText.words.forEach((word, index) => {
-      this.tl.call(handleCall, [word], index + 0.01);
+      this.tl.call(this.animateWord.bind(this), [word], index + 0.01);
     });
     this.tl.set({}, {}, '+=0.01');
 
