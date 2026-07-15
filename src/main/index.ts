@@ -18,42 +18,45 @@ function initialize() {
     gap: GAP,
   });
   // display the prev / next buttons
-  gsap.set('.carousel-nav', {
+  gsap.set('.carousel-nav, .carousel-progress', {
     display: 'block',
   });
   // set initial opacity for slides
   gsap.set('.carousel-slide', {
     opacity: (i) => (i === 0 ? 1 : 0.4),
   });
+
   // new InertiaScroll(true);
 
   {
-    const reveal = new RevealText('#first-project-info', '#first-project-info p', {
+    const description = new RevealText('#first-project-info', '#first-project-info p', {
       highlightColor: 'rgb(0, 144, 255)',
     });
-    reveal.initialize();
+    description.initialize();
 
     const slides = gsap.utils.toArray<HTMLElement>('#first-project-slide');
+    const container = document.getElementById('first-project-carousel') as HTMLElement;
     const prev = document.querySelector('#first-prev') as HTMLButtonElement;
     const next = document.querySelector('#first-next') as HTMLButtonElement;
-    const container = document.getElementById('first-project-carousel') as HTMLElement;
+    const progress = document.querySelector('#first-project-carousel-progress') as SVGElement;
 
-    const gallery = new ProjectGallery(slides, container, prev, next);
+    const gallery = new ProjectGallery(slides, container, prev, next, progress);
     gallery.initializeGallery();
   }
 
   {
-    const reveal = new RevealText('#second-project-info', '#second-project-info p', {
+    const description = new RevealText('#second-project-info', '#second-project-info p', {
       highlightColor: 'rgb(0, 255, 30)',
     });
-    reveal.initialize();
+    description.initialize();
 
     const slides = gsap.utils.toArray<HTMLElement>('#second-project-slide');
     const prev = document.querySelector('#second-prev') as HTMLButtonElement;
     const next = document.querySelector('#second-next') as HTMLButtonElement;
     const container = document.getElementById('second-project') as HTMLElement;
+    const progress = document.querySelector('#second-project-carousel-progress') as SVGElement;
 
-    const gallery = new ProjectGallery(slides, container, prev, next);
+    const gallery = new ProjectGallery(slides, container, prev, next, progress);
     gallery.initializeGallery();
   }
 }

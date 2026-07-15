@@ -7,7 +7,7 @@ class CarouselBasic extends CarouselCore {
   readonly slides: HTMLElement[] | null = null;
 
   private config: CarouselConfigType = {};
-  private previousIndex: number = 0;
+  private previousIndex: number | null = null;
   private length: number | null = null;
   private startX: number = 0;
   private widths: number[] = [];
@@ -51,7 +51,7 @@ class CarouselBasic extends CarouselCore {
     this.refresh(true);
 
     if (this.config.onChange && this.slides) {
-      this.config.onChange(this.slides[this.activeSlideIndex], this.activeSlideIndex);
+      this.config.onChange(this.slides[this.activeSlideIndex], this.activeSlideIndex, this.previousIndex);
     }
   }
 
@@ -79,11 +79,11 @@ class CarouselBasic extends CarouselCore {
         return null;
       }
 
-      let i = this.getClosest(this.times, this.tl.time(), this.tl.duration());
+      const i = this.getClosest(this.times, this.tl.time(), this.tl.duration());
+      this.config.onChange(this.slides[i], i, this.previousIndex);
 
       if (this.previousIndex !== i) {
         this.previousIndex = i;
-        this.config.onChange(this.slides[i], i);
       }
     };
 
@@ -226,7 +226,6 @@ class CarouselBasic extends CarouselCore {
 
       this.populateWidths();
       this.populateTimeline();
-      console.log(this.tl);
 
       this.populateOffsets();
 
@@ -236,12 +235,12 @@ class CarouselBasic extends CarouselCore {
         this.tl.reverse();
       }
 
+      if (this.config.onChange && this.slides) {
+        this.config.onChange(this.slides[this.activeSlideIndex], this.activeSlideIndex, this.previousIndex);
+      }
+
       this.getClosestIndex(true);
       this.previousIndex = this.activeSlideIndex;
-
-      if (this.config.onChange && this.slides) {
-        this.config.onChange(this.slides[this.activeSlideIndex], this.activeSlideIndex);
-      }
     });
   }
 

@@ -134,6 +134,18 @@
   }
 }
 
+.carousel-progress {
+  display: none; /* displayed in the JS */
+  position: absolute;
+  width: 32%;
+  max-width: 300px;
+  max-height: 12px;
+  bottom: -1rem;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  opacity: 0.32;
+}
+
 @media (max-width: 1400px) {
   .container {
     margin-inline: 10rem;

@@ -28,10 +28,11 @@ class RevealText {
     }
 
     this.splitText = SplitText.create(this.text, {
-      type: 'words',
+      type: 'chars',
+      smartWrap: true,
     });
 
-    this.splitText.words.forEach((word, index) => {
+    this.splitText.chars.forEach((word, index) => {
       this.tl.call(this.animateWord.bind(this), [word], index + 0.01);
     });
     this.tl.set({}, {}, '+=0.01');
@@ -45,19 +46,19 @@ class RevealText {
     });
   }
 
-  private animateWord(word: Element) {
+  private animateWord(char: Element) {
     if (!this.scrollTrigger) {
       return null;
     }
 
     if (this.scrollTrigger.direction === 1) {
-      if (word?.parentElement?.nodeName == 'P') {
-        gsap.to(word, { color: DIV_HIGHLIGHT });
+      if (char.parentElement?.parentElement?.id === 'highlight') {
+        gsap.to(char, { color: this.config.highlightColor });
       } else {
-        gsap.to(word, { color: this.config.highlightColor });
+        gsap.to(char, { color: DIV_HIGHLIGHT });
       }
     } else {
-      gsap.to(word, { color: DEFAULT_COLOR });
+      gsap.to(char, { color: DEFAULT_COLOR });
     }
   }
 }
