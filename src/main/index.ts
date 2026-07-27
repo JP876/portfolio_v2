@@ -8,6 +8,7 @@ import { GAP } from './consts';
 import RevealText from './RevealText';
 import ProjectGallery from './ProjectGallery';
 import Grid from './Canvas/Grid';
+import TextEffect from './Canvas/TextEffect';
 
 gsap.registerPlugin(ScrollTrigger, Draggable, InertiaPlugin, SplitText);
 
@@ -33,6 +34,16 @@ function initialize() {
     const heroGrid = new Grid(heroSection);
 
     heroGrid.initGrid();
+
+    const author = new TextEffect(document.getElementById('dev') as HTMLElement, {});
+    author.init('Josip Popović');
+
+    function animate() {
+      author.clearCanvas();
+      author.render();
+      requestAnimationFrame(animate);
+    }
+    animate();
   }
 
   {
@@ -88,4 +99,4 @@ function initialize() {
   }
 }
 
-window.addEventListener('DOMContentLoaded', initialize, false);
+window.addEventListener('load', initialize, false);

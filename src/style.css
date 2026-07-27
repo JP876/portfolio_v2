@@ -48,7 +48,15 @@
 .hero-intro {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
   gap: 1rem;
+}
+
+.hero-author {
+  position: relative;
+  height: 20rem;
+  width: 80vw;
 }
 
 .projects {

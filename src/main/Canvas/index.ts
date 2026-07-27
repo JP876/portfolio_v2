@@ -2,7 +2,7 @@ import type { CanvasOptions } from './types';
 
 class Canvas {
   readonly canvas = document.createElement('canvas');
-  readonly ctx = this.canvas.getContext('2d');
+  readonly ctx: CanvasRenderingContext2D | null = null;
   readonly container: HTMLElement | null = null;
 
   private resizeElement: HTMLElement | null = null;
@@ -23,6 +23,7 @@ class Canvas {
     this.canvas.style.top = this.container.clientTop + 'px';
     this.canvas.style.left = this.container.clientLeft + 'px';
 
+    this.ctx = this.canvas.getContext('2d', options?.contextOptions || {});
     this.ctx?.translate(0.5, 0.5);
     this.container.appendChild(this.canvas);
 
@@ -42,6 +43,11 @@ class Canvas {
       width: this.canvas.width,
       height: this.canvas.height,
     };
+  }
+
+  clearCanvas() {
+    if (!this.ctx) return null;
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
   }
 }
 
