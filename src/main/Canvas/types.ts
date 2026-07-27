@@ -8,6 +8,6 @@ export type GridOptions = CanvasOptions & {
   boxMinWidth?: number;
   gap?: number;
   maxRows?: number;
-  offset?: (dimmensions: { width: number; height: number }) => { x: number; y: number };
+  offset?: (() => { x: number; y: number }) | null;
   onResize?: () => void;
 };
