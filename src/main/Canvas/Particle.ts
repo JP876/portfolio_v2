@@ -1,5 +1,4 @@
-import { PARTICLE_SIZE } from './consts';
-import { MOUSE_RADIUS } from './consts';
+import { PARTICLE_SIZE, MOUSE_RADIUS } from './consts';
 
 class Particle {
   private readonly ctx: CanvasRenderingContext2D | null = null;
@@ -33,15 +32,18 @@ class Particle {
   draw() {
     if (!this.ctx) return null;
 
+    this.ctx.save();
     this.ctx.fillStyle = this.color;
+    this.ctx.strokeStyle = this.color;
     this.ctx.fillRect(this.x, this.y, this.size, this.size);
+    this.ctx.restore();
   }
 
   update(x: number, y: number) {
     this.mouse = { x, y };
     this.dx = this.mouse.x - this.x;
     this.dy = this.mouse.y - this.y;
-    this.distance = this.dx * this.dx + this.dy * this.dy;
+    this.distance = Math.hypot(this.dx, this.dy);
     this.force = -MOUSE_RADIUS / this.distance;
 
     if (this.distance < MOUSE_RADIUS) {

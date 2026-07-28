@@ -30,15 +30,23 @@ class TextEffect extends Canvas {
       })
     );
 
-    window.addEventListener('mousemove', this.onMouseMove.bind(this));
+    window.addEventListener(
+      'mousemove',
+      throttle((event: MouseEvent) => {
+        this.onMouseMove(event);
+      }, 50)
+    );
   }
 
   private onMouseMove(event: MouseEvent) {
     if (!this.container) return null;
-    const { x, y } = this.container.getBoundingClientRect();
+    const { x, y, width, height } = this.container.getBoundingClientRect();
 
-    this.mouse.x = Math.abs(event.x - x);
-    this.mouse.y = Math.abs(event.y - y);
+    if (event.x > x && event.x < x + width && event.y > y && event.y < y + height) {
+      this.mouse = { x: event.x - x, y: event.y - y };
+    } else {
+      this.mouse = { x: 0, y: 0 };
+    }
   }
 
   private onResize() {
@@ -68,6 +76,7 @@ class TextEffect extends Canvas {
   }
 
   render() {
+    this.clearCanvas();
     this.particles.forEach((particle) => {
       particle.update(this.mouse.x, this.mouse.y);
       particle.draw();
@@ -150,7 +159,7 @@ class TextEffect extends Canvas {
     const fontFamily = this.options.fontFamily || 'Helvetica';
 
     this.ctx.font = `${fontSize} ${fontFamily}`;
-    this.ctx.letterSpacing = this.options.letterSpacing || '6px';
+    this.ctx.letterSpacing = this.options.letterSpacing || '4px';
     this.ctx.textAlign = this.options.textAlign || 'center';
     this.ctx.textBaseline = this.options.textBaseline || 'middle';
 

@@ -39,7 +39,6 @@ function initialize() {
     author.init('Josip Popović');
 
     function animate() {
-      author.clearCanvas();
       author.render();
       requestAnimationFrame(animate);
     }
