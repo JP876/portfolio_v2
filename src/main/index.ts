@@ -35,8 +35,8 @@ function initialize() {
 
     heroGrid.initGrid();
 
-    const author = new TextEffect(document.getElementById('dev') as HTMLElement, {});
-    author.init('Josip Popović');
+    const author = new TextEffect(document.getElementById('dev') as HTMLElement, 'Josip Popović', {});
+    author.init();
 
     function animate() {
       author.render();

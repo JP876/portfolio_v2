@@ -25,5 +25,6 @@ export type TextEffectOptions = CanvasOptions & {
   textAlign?: CanvasTextAlign;
   textBaseline?: CanvasTextBaseline;
   gradient?: GradientType[] | null;
+  particleOptions?: {};
   onResize?: () => void;
 };

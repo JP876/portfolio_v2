@@ -6,17 +6,12 @@ class Canvas {
   readonly container: HTMLElement | null = null;
 
   private resizeElement: HTMLElement | null = null;
-  private sizes = { width: 0, height: 0 };
 
   constructor(container: HTMLElement, options?: CanvasOptions) {
     this.container = container;
 
     this.canvas.width = (options?.width || this.container.clientWidth) * window.devicePixelRatio;
     this.canvas.height = (options?.height || this.container.clientHeight) * window.devicePixelRatio;
-    this.sizes = {
-      width: this.canvas.width,
-      height: this.canvas.height,
-    };
 
     this.canvas.style.imageRendering = 'pixelated';
     this.canvas.style.position = 'absolute';
@@ -30,19 +25,11 @@ class Canvas {
     this.resizeElement = options?.resizeTo ? options.resizeTo : this.container;
   }
 
-  get dimensions() {
-    return this.sizes;
-  }
-
   resizeCanvas() {
     if (!this.ctx || !this.resizeElement) return null;
 
     this.canvas.width = this.resizeElement.clientWidth * window.devicePixelRatio;
     this.canvas.height = this.resizeElement.clientHeight * window.devicePixelRatio;
-    this.sizes = {
-      width: this.canvas.width,
-      height: this.canvas.height,
-    };
   }
 
   clearCanvas() {

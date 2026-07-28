@@ -3,12 +3,13 @@ import { PARTICLE_SIZE, MOUSE_RADIUS } from './consts';
 class Particle {
   private readonly ctx: CanvasRenderingContext2D | null = null;
 
+  size: number = PARTICLE_SIZE;
+  color: string = '';
   private x: number = 0;
   private y: number = 0;
   private originX: number = 0;
   private originY: number = 0;
-  private color: string = '';
-  private size: number = PARTICLE_SIZE;
+  private initialColor: string = '';
   private dx: number = 0;
   private dy: number = 0;
   private vx: number = 0;
@@ -18,15 +19,20 @@ class Particle {
   private distance: number = 0;
   private friction: number = 0.4;
   private ease: number = 0.14;
-  private mouse: { x: number; y: number } = { x: 0, y: 0 };
+  private mouse = { x: 0, y: 0 };
 
   constructor(x: number, y: number, color: string, ctx: CanvasRenderingContext2D) {
     this.ctx = ctx;
     this.x = x;
     this.y = y;
     this.color = color;
+    this.initialColor = color;
     this.originX = x;
     this.originY = y;
+  }
+
+  get position() {
+    return { x: this.x, y: this.y };
   }
 
   draw() {
@@ -39,8 +45,9 @@ class Particle {
     this.ctx.restore();
   }
 
-  update(x: number, y: number) {
-    this.mouse = { x, y };
+  update(mouseX: number, mouseY: number) {
+    this.mouse = { x: mouseX, y: mouseY };
+
     this.dx = this.mouse.x - this.x;
     this.dy = this.mouse.y - this.y;
     this.distance = Math.hypot(this.dx, this.dy);
@@ -50,6 +57,16 @@ class Particle {
       this.angle = Math.atan2(this.dy, this.dx);
       this.vx += this.force * Math.cos(this.angle);
       this.vy += this.force * Math.sin(this.angle);
+
+      if (this.distance < MOUSE_RADIUS * 0.6) {
+        this.color = 'rgb(0, 166, 255)';
+      } else {
+        this.color = this.initialColor;
+      }
+    }
+
+    if (this.mouse.x === 0 && this.mouse.y === 0) {
+      this.color = this.initialColor;
     }
 
     this.x += (this.vx *= this.friction) + (this.originX - this.x) * this.ease;

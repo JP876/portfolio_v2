@@ -13,11 +13,12 @@ class TextEffect extends Canvas {
   private particles: Particle[] = [];
   private mouse = { x: 0, y: 0 };
   private imageData: ImageDataArray | null = null;
-  private textPostion = { x: 0, y: 0 };
+  private textPosition = { x: 0, y: 0 };
 
-  constructor(container: HTMLElement, options?: TextEffectOptions) {
+  constructor(container: HTMLElement, text: string, options?: TextEffectOptions) {
     super(container, { ...options, contextOptions: { willReadFrequently: true, ...(options?.contextOptions || {}) } });
 
+    this.text = text;
     this.options = options || {};
     this.fontSize = this.options.fontSize || FONT_SIZE;
     this.lineHeight = this.fontSize * 0.8;
@@ -42,6 +43,7 @@ class TextEffect extends Canvas {
     if (!this.container) return null;
     const { x, y, width, height } = this.container.getBoundingClientRect();
 
+    // check if mouse position is outside of the container/canvas
     if (event.x > x && event.x < x + width && event.y > y && event.y < y + height) {
       this.mouse = { x: event.x - x, y: event.y - y };
     } else {
@@ -54,23 +56,25 @@ class TextEffect extends Canvas {
 
     this.resizeCanvas();
     this.setTextOptions();
-    this.wrapText(this.text);
-    this.imageData = this.ctx.getImageData(0, 0, this.canvas.width, this.canvas.height).data;
+    this.textPosition = {
+      x: this.canvas.width / 2,
+      y: this.canvas.height / 2,
+    };
+    this.wrapText();
     this.convertToParticles();
     this.render();
   }
 
-  init(text: string) {
+  init() {
     if (!this.ctx) return null;
     if (this.options.gradient) this.applyGradient();
 
-    this.text = text;
     this.setTextOptions();
-    this.textPostion = {
+    this.textPosition = {
       x: this.canvas.width / 2,
       y: this.canvas.height / 2,
     };
-    this.wrapText(text);
+    this.wrapText();
     this.convertToParticles();
     this.render();
   }
@@ -86,10 +90,9 @@ class TextEffect extends Canvas {
   private convertToParticles() {
     if (!this.ctx) return null;
 
-    this.particles = [];
     this.imageData = this.ctx.getImageData(0, 0, this.canvas.width, this.canvas.height).data;
-
     this.clearCanvas();
+    this.particles = [];
 
     for (let y = 0; y < this.canvas.height; y += PARTICLE_SIZE) {
       for (let x = 0; x < this.canvas.width; x += PARTICLE_SIZE) {
@@ -108,14 +111,14 @@ class TextEffect extends Canvas {
     }
   }
 
-  private wrapText(text: string) {
+  private wrapText() {
     if (!this.ctx) return null;
 
     let linesCounter = 0;
     let line = '';
     let testLine = '';
     const linesArr: string[] = [];
-    const words = text.split(' ');
+    const words = this.text.split(' ');
 
     for (let i = 0; i < words.length; i++) {
       testLine = line + words[i] + ' ';
@@ -131,14 +134,14 @@ class TextEffect extends Canvas {
     }
 
     const textHeight = this.lineHeight * linesCounter;
-    this.textPostion = {
+    this.textPosition = {
       x: this.canvas.width / 2,
       y: this.canvas.height / 2 - textHeight / 2,
     };
 
     linesArr.forEach((line, index) => {
-      this.ctx?.fillText(line, this.textPostion.x, this.textPostion.y + index * this.lineHeight);
-      // this.ctx?.strokeText(line, this.textPostion.x, this.textPostion.y + index * this.lineHeight);
+      this.ctx?.fillText(line, this.textPosition.x, this.textPosition.y + index * this.lineHeight);
+      // this.ctx?.strokeText(line, this.textPosition.x, this.textPosition.y + index * this.lineHeight);
     });
   }
 
