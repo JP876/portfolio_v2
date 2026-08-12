@@ -5,7 +5,7 @@
 }
 
 .container {
-  margin-inline: 20rem;
+  margin-inline: 1rem;
 }
 
 /* 
@@ -55,8 +55,20 @@
 
 .hero-author {
   position: relative;
-  height: 20rem;
-  width: 80vw;
+  height: 14rem;
+  width: 100vw;
+}
+
+.hero-description {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  margin-inline: 1.4rem;
+
+  p {
+    font-size: 1.2rem;
+    text-align: center;
+  }
 }
 
 .projects {
@@ -71,9 +83,9 @@
   flex-direction: column;
   gap: 2rem;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
-  padding-inline: 2rem;
-  padding-top: 1.4rem;
-  padding-bottom: 2.8rem;
+  padding-inline: 1rem;
+  padding-top: 1rem;
+  padding-bottom: 2.4rem;
 }
 
 .project-info {
@@ -92,7 +104,7 @@
 }
 
 .project-carousel {
-  height: 40vh;
+  height: 50vh;
   position: relative;
 }
 
@@ -108,7 +120,7 @@
 
 .carousel-slide {
   position: relative;
-  flex: 0 0 40vw; /* width of single slide */
+  flex: 0 0 40%; /* width of single slide */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -122,6 +134,7 @@
     width: 100%;
     height: 100%;
     object-fit: contain;
+    aspect-ratio: 16 / 9;
   }
 }
 
@@ -168,14 +181,4 @@
   left: 50%;
   transform: translate(-50%, 0%);
   opacity: 0.32;
-}
-
-@media (max-width: 1400px) {
-  .container {
-    margin-inline: 10rem;
-  }
-
-  .carousel-slide {
-    flex: 0 0 50vw;
-  }
 }

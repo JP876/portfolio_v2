@@ -28,21 +28,35 @@ function initialize() {
     opacity: (i) => (i === 0 ? 1 : 0.4),
   });
 
+  const isMobile = 'ontouchstart' in window;
+
   // new InertiaScroll(true);
   {
     const heroSection = document.getElementById('hero-section') as HTMLElement;
-    const heroGrid = new Grid(heroSection);
+    const heroGrid = new Grid(heroSection, { animate: {} });
 
     heroGrid.initGrid();
 
-    const author = new TextEffect(document.getElementById('dev') as HTMLElement, 'Josip Popović', {});
-    author.init();
+    const author = new TextEffect(document.getElementById('dev') as HTMLElement, 'Josip Popović', {
+      gradient: [
+        { offset: 0.1, color: 'rgb(0, 0, 0)' },
+        { offset: 0.3, color: 'rgb(0, 117, 213)' },
+        { offset: 0.5, color: 'rgb(35, 182, 255)' },
+        { offset: 0.7, color: 'rgb(0, 117, 213)' },
+        { offset: 0.9, color: 'rgb(0, 0, 0)' },
+      ],
+    });
 
-    function animate() {
-      author.render();
-      requestAnimationFrame(animate);
+    author.init();
+    author.setOptions = { fontSize: 80, letterSpacing: '2px' };
+
+    if (!isMobile) {
+      function animate() {
+        author.render();
+        requestAnimationFrame(animate);
+      }
+      animate();
     }
-    animate();
   }
 
   {

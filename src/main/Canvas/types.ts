@@ -9,6 +9,7 @@ export type GridOptions = CanvasOptions & {
   boxMinWidth?: number;
   gap?: number;
   maxRows?: number;
+  animate?: { timeout?: number };
   offset?: (() => { x: number; y: number }) | null;
   onResize?: () => void;
 };
@@ -18,13 +19,17 @@ export type GradientType = {
   color: string;
 };
 
-export type TextEffectOptions = CanvasOptions & {
+export type TextOptionsType = {
   fontSize?: number;
   fontFamily?: string;
   letterSpacing?: string;
   textAlign?: CanvasTextAlign;
   textBaseline?: CanvasTextBaseline;
-  gradient?: GradientType[] | null;
-  particleOptions?: {};
-  onResize?: () => void;
 };
+
+export type TextEffectOptions = CanvasOptions &
+  TextOptionsType & {
+    gradient?: GradientType[] | null;
+    particleOptions?: {};
+    onResize?: () => void;
+  };

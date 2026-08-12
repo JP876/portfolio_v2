@@ -58,11 +58,11 @@ class Particle {
       this.vx += this.force * Math.cos(this.angle);
       this.vy += this.force * Math.sin(this.angle);
 
-      if (this.distance < MOUSE_RADIUS * 0.6) {
-        this.color = 'rgb(0, 166, 255)';
-      } else {
-        this.color = this.initialColor;
-      }
+      // if (this.distance < MOUSE_RADIUS * 0.6) {
+      //   this.color = 'rgb(0, 166, 255)';
+      // } else {
+      //   this.color = this.initialColor;
+      // }
     }
 
     if (this.mouse.x === 0 && this.mouse.y === 0) {

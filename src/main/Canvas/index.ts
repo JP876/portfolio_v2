@@ -10,8 +10,8 @@ class Canvas {
   constructor(container: HTMLElement, options?: CanvasOptions) {
     this.container = container;
 
-    this.canvas.width = (options?.width || this.container.clientWidth) * window.devicePixelRatio;
-    this.canvas.height = (options?.height || this.container.clientHeight) * window.devicePixelRatio;
+    this.canvas.width = options?.width || this.container.clientWidth;
+    this.canvas.height = options?.height || this.container.clientHeight;
 
     this.canvas.style.imageRendering = 'pixelated';
     this.canvas.style.position = 'absolute';
@@ -28,8 +28,8 @@ class Canvas {
   resizeCanvas() {
     if (!this.ctx || !this.resizeElement) return null;
 
-    this.canvas.width = this.resizeElement.clientWidth * window.devicePixelRatio;
-    this.canvas.height = this.resizeElement.clientHeight * window.devicePixelRatio;
+    this.canvas.width = this.resizeElement.clientWidth;
+    this.canvas.height = this.resizeElement.clientHeight;
   }
 
   clearCanvas() {
