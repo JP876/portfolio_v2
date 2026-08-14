@@ -216,9 +216,6 @@ class CarouselBasic extends CarouselCore {
       return null;
     }
 
-    const imageEl = this.slides[0].firstElementChild as HTMLImageElement;
-    console.log(imageEl.src);
-
     gsap.context(() => {
       this.initializeTimeline();
       gsap.set(this.slides, { x: 0 });
