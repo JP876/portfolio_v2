@@ -36,6 +36,13 @@ function initialize() {
     const heroGrid = new Grid(heroSection, { animate: {} });
 
     heroGrid.initGrid();
+    heroGrid.canvas.style.zIndex = '-1';
+
+    // if (heroGrid.ctx) {
+    //   const { canvas, ctx } = heroGrid;
+    //   ctx.fillStyle = 'black';
+    //   ctx.fillRect(0, 0, canvas.width, canvas.height);
+    // }
 
     const author = new TextEffect(document.getElementById('dev') as HTMLElement, 'Josip Popović', {
       gradient: [
@@ -48,7 +55,7 @@ function initialize() {
     });
 
     author.init();
-    author.setOptions = { fontSize: 80, letterSpacing: '2px' };
+    // author.setOptions = { fontSize: 80, letterSpacing: '2px' };
 
     if (!isMobile) {
       function animate() {
