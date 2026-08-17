@@ -10,6 +10,7 @@ import ProjectGallery from './ProjectGallery';
 import Grid from './Canvas/Grid';
 import TextEffect from './Canvas/TextEffect';
 import { copyToClipboard } from './utils';
+import MediaQuery from './MediaQuery';
 
 gsap.registerPlugin(ScrollTrigger, Draggable, InertiaPlugin, SplitText);
 
@@ -30,6 +31,7 @@ function initialize() {
   });
 
   const isMobile = 'ontouchstart' in window;
+  const mediaQuery = new MediaQuery();
 
   // new InertiaScroll(true);
   {
@@ -51,7 +53,7 @@ function initialize() {
     });
 
     author.init();
-    // author.setOptions = { fontSize: 80, letterSpacing: '2px' };
+    mediaQuery.attach('dev', author);
 
     if (!isMobile) {
       function animate() {
@@ -60,6 +62,8 @@ function initialize() {
       }
       animate();
     }
+
+    // gsap.from('.hero-description p', { stagger: 0.2, x: '-100%' });
 
     const btn = document.getElementById('email-btn') as HTMLButtonElement;
     btn.addEventListener('click', async () => {
@@ -82,7 +86,7 @@ function initialize() {
       projectGrid.ctx?.clearRect(x, y, carouselRect.width, carouselRect.height);
     }
 
-    const projectGrid = new Grid(projectSection, { resizeTo: projectSection, onResize: handleResize, maxRows: 2 });
+    const projectGrid = new Grid(projectSection, { resizeTo: projectSection, onResize: handleResize, maxRows: 1 });
 
     projectGrid.initGrid();
     projectGrid.canvas.style.zIndex = '-1';
@@ -118,6 +122,8 @@ function initialize() {
     const gallery = new ProjectGallery(slides, container, prev, next, progress);
     gallery.initializeGallery();
   }
+
+  mediaQuery.notify();
 }
 
 window.addEventListener('load', initialize, false);

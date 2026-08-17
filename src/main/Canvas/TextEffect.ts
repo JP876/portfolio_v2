@@ -7,8 +7,10 @@ import ImageDataToParticles from './ImageDataToParticles';
 import TextOptions from './TextOptions';
 import LinearGradient from './LinearGradient';
 import TextWrap from './TextWrap';
+import type { breakpointType } from '../MediaQuery/types';
+import type { Observer } from '../types';
 
-class TextEffect extends Canvas {
+class TextEffect extends Canvas implements Observer<breakpointType> {
   private text = '';
   private options: TextEffectOptions = {};
   private fontSize: number = FONT_SIZE;
@@ -82,6 +84,20 @@ class TextEffect extends Canvas {
 
     this.convertToParticles();
     this.render();
+  }
+
+  update(value: breakpointType): void {
+    switch (value.name) {
+      case 'sm':
+      case 'xs':
+        this.setOptions = { fontSize: 80, letterSpacing: '2px' };
+        break;
+      case 'md':
+        this.setOptions = { fontSize: 100, letterSpacing: '2px' };
+        break;
+      default:
+        this.setOptions = { fontSize: 120, letterSpacing: '4px' };
+    }
   }
 
   render() {
