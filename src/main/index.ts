@@ -9,6 +9,7 @@ import RevealText from './RevealText';
 import ProjectGallery from './ProjectGallery';
 import Grid from './Canvas/Grid';
 import TextEffect from './Canvas/TextEffect';
+import { copyToClipboard } from './utils';
 
 gsap.registerPlugin(ScrollTrigger, Draggable, InertiaPlugin, SplitText);
 
@@ -38,13 +39,8 @@ function initialize() {
     heroGrid.initGrid();
     heroGrid.canvas.style.zIndex = '-1';
 
-    // if (heroGrid.ctx) {
-    //   const { canvas, ctx } = heroGrid;
-    //   ctx.fillStyle = 'black';
-    //   ctx.fillRect(0, 0, canvas.width, canvas.height);
-    // }
-
     const author = new TextEffect(document.getElementById('dev') as HTMLElement, 'Josip Popović', {
+      fontFamily: 'Corben',
       gradient: [
         { offset: 0.1, color: 'rgb(0, 0, 0)' },
         { offset: 0.3, color: 'rgb(0, 117, 213)' },
@@ -64,6 +60,11 @@ function initialize() {
       }
       animate();
     }
+
+    const btn = document.getElementById('email-btn') as HTMLButtonElement;
+    btn.addEventListener('click', async () => {
+      copyToClipboard('popovic_josip@protonmail.com');
+    });
   }
 
   {
@@ -88,7 +89,7 @@ function initialize() {
 
     handleResize();
 
-    const description = new RevealText('#first-project-info', '#first-project-info p', {
+    const description = new RevealText('#first-project-description', '#first-project-description p', {
       highlightColor: 'rgb(0, 144, 255)',
     });
     description.initialize();

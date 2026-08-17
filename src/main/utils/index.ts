@@ -47,3 +47,17 @@ export const throttle = (fn: Function, wait: number = 200) => {
     }
   };
 };
+
+export async function withCatch<T, E = Error>(promise: Promise<T>): Promise<[null, T] | [E, null]> {
+  return promise
+    .then((data) => {
+      return [null, data] as [null, T];
+    })
+    .catch((error) => {
+      return [error, null] as [E, null];
+    });
+}
+
+export const copyToClipboard = (text: string) => {
+  return withCatch(navigator.clipboard.writeText(text));
+};
