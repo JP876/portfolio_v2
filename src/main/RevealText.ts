@@ -7,6 +7,9 @@ const DIV_HIGHLIGHT = '#000000'; // black
 
 export type RevealTextConfig = {
   highlightColor?: string;
+  defaultColor?: string;
+  revealColor?: string;
+  scrollTriggerOptions?: Omit<ScrollTrigger.StaticVars, 'trigger' | 'animation' | 'scrub'>;
 };
 
 class RevealText {
@@ -20,7 +23,11 @@ class RevealText {
   constructor(container: HTMLElement | string, text: HTMLElement | string, config: RevealTextConfig) {
     this.container = container;
     this.text = text;
-    this.config = config;
+    this.config = {
+      ...config,
+      defaultColor: config?.defaultColor || DEFAULT_COLOR,
+      revealColor: config?.revealColor || DIV_HIGHLIGHT,
+    };
   }
 
   initialize() {
@@ -39,11 +46,12 @@ class RevealText {
     this.tl.set({}, {}, '+=0.01');
 
     this.scrollTrigger = ScrollTrigger.create({
-      trigger: this.container,
-      start: 'top 80%',
-      end: 'center 60%',
+      start: 'top 100%',
+      end: 'bottom 92%',
+      ...(this.config?.scrollTriggerOptions || {}),
       scrub: true,
       animation: this.tl,
+      trigger: this.container,
     });
   }
 
@@ -56,10 +64,10 @@ class RevealText {
       if (char.parentElement?.parentElement?.id === 'highlight') {
         gsap.to(char, { color: this.config.highlightColor });
       } else {
-        gsap.to(char, { color: DIV_HIGHLIGHT });
+        gsap.to(char, { color: this.config.revealColor });
       }
     } else {
-      gsap.to(char, { color: DEFAULT_COLOR });
+      gsap.to(char, { color: this.config.defaultColor });
     }
   }
 }
