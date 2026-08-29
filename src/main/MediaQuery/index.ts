@@ -10,20 +10,21 @@ const BREAKPOINTS: breakpointType[] = [
   { name: 'xxl', minWidth: 1560 },
 ] as const;
 
-class MediaQuery implements Subject<breakpointType> {
+class MediaQuery implements Subject {
+  currentBreakpoint: breakpointType | null = null;
+
   private breakpoints = BREAKPOINTS;
-  private bp: breakpointType | null = null;
-  private observers = new Map<string, Observer<breakpointType>>();
+  private observers = new Map<string, Observer>();
 
   constructor() {
-    this.bp = this.findNext();
+    this.currentBreakpoint = this.findNext();
     window.addEventListener('resize', this.onResize.bind(this));
   }
 
   private onResize() {
     const next = this.findNext();
-    if (next.name !== this.bp?.name) {
-      this.bp = next;
+    if (next.name !== this.currentBreakpoint?.name) {
+      this.currentBreakpoint = next;
       this.notify();
     }
   }
@@ -44,7 +45,7 @@ class MediaQuery implements Subject<breakpointType> {
     return bp;
   }
 
-  attach(key: string, observer: Observer<breakpointType>) {
+  attach(key: string, observer: Observer) {
     this.observers.set(key, observer);
   }
 
@@ -56,9 +57,7 @@ class MediaQuery implements Subject<breakpointType> {
 
   notify() {
     for (const value of this.observers.values()) {
-      if (this.bp) {
-        value.update(this.bp);
-      }
+      value.update({ type: 'breakpoint', instance: this });
     }
   }
 }

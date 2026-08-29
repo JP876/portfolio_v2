@@ -24,6 +24,11 @@ class Grid extends Canvas {
   private boxPostions: BoxPostionsType = { outer: [], inner: [], all: [] };
 
   interval: ReturnType<typeof setTimeout> | null = null;
+  colors = {
+    outer: 'rgba(0, 0, 0, 0.12)',
+    inner: 'rgba(0, 128, 255, 0.18)',
+    background: 'rgba(136, 136, 136, 0.06)',
+  };
 
   constructor(container: HTMLElement, options?: GridOptions) {
     super(container, options);
@@ -67,6 +72,14 @@ class Grid extends Canvas {
     return this.boxSizes;
   }
 
+  findBox(x: number, y: number) {
+    const rowBellow = this.boxPostions.all.findIndex((pos) => pos.y > y);
+    const index = rowBellow === -1 ? this.boxPostions.all.length - 1 : rowBellow - 1;
+    const row = this.boxPostions.all.filter((pos) => pos.y === this.boxPostions.all[index].y);
+
+    return row.find((b) => b.x < x && b.x + this.boxSizes.outer.width > x && b.y + this.boxSizes.outer.height > y);
+  }
+
   initGrid() {
     this.setRowsAndColumns();
     this.generateRandomGrid();
@@ -84,13 +97,23 @@ class Grid extends Canvas {
     this.drawGrid();
   }
 
+  private drawBackground() {
+    if (!this.ctx) return null;
+
+    this.ctx.save();
+    this.ctx.translate(0, 0);
+    this.ctx.fillStyle = this.colors.background;
+    this.ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
+    this.ctx.restore();
+  }
+
   private drawInnerBox(x: number, y: number) {
     if (!this.ctx) return null;
 
     this.ctx.save();
     this.ctx.translate(x, y);
 
-    this.ctx.strokeStyle = 'rgba(0, 128, 255, 0.18)';
+    this.ctx.strokeStyle = this.colors.inner;
     this.ctx.lineWidth = 3;
     this.ctx.strokeRect(
       this.boxSizes.inner.width,
@@ -106,7 +129,7 @@ class Grid extends Canvas {
 
     this.ctx.save();
     this.ctx.translate(x, y);
-    this.ctx.strokeStyle = 'rgba(0, 0, 0, 0.12)';
+    this.ctx.strokeStyle = this.colors.outer;
     this.ctx.strokeRect(0, 0, this.boxSizes.outer.width, this.boxSizes.outer.height);
     this.ctx.restore();
   }
@@ -126,14 +149,6 @@ class Grid extends Canvas {
     for (let i = 0; i < this.rowsCount; i++) {
       this.randomGrid.push(getRandomNumArray(this.columnsCount, 1, 10));
     }
-  }
-
-  findBox(x: number, y: number) {
-    const rowBellow = this.boxPostions.all.findIndex((pos) => pos.y > y);
-    const index = rowBellow === -1 ? this.boxPostions.all.length - 1 : rowBellow - 1;
-    const row = this.boxPostions.all.filter((pos) => pos.y === this.boxPostions.all[index].y);
-
-    return row.find((b) => b.x < x && b.x + this.boxSizes.outer.width > x && b.y + this.boxSizes.outer.height > y);
   }
 
   private getColumnsAndRows() {
@@ -237,7 +252,9 @@ class Grid extends Canvas {
 
   private drawGrid() {
     if (!this.ctx) return null;
+
     this.clearCanvas();
+    this.drawBackground();
 
     this.boxPostions.outer.forEach((pos) => {
       this.drawOuterBox(pos.x, pos.y);

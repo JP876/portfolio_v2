@@ -7,10 +7,11 @@ import ImageDataToParticles from './ImageDataToParticles';
 import TextOptions from './TextOptions';
 import LinearGradient from './LinearGradient';
 import TextWrap from './TextWrap';
-import type { breakpointType } from '../MediaQuery/types';
 import type { Observer } from '../types';
+import MediaQuery from '../MediaQuery';
+import type { breakpointNameType } from '../MediaQuery/types';
 
-class TextEffect extends Canvas implements Observer<breakpointType> {
+class TextEffect extends Canvas implements Observer {
   private text = '';
   private options: TextEffectOptions = {};
   private fontSize: number = FONT_SIZE;
@@ -86,10 +87,10 @@ class TextEffect extends Canvas implements Observer<breakpointType> {
     this.render();
   }
 
-  update(value: breakpointType): void {
-    switch (value.name) {
-      case 'sm':
+  private handleFont(breakpoint: breakpointNameType) {
+    switch (breakpoint) {
       case 'xs':
+      case 'sm':
         this.setOptions = { fontSize: 80, letterSpacing: '2px' };
         break;
       case 'md':
@@ -97,6 +98,12 @@ class TextEffect extends Canvas implements Observer<breakpointType> {
         break;
       default:
         this.setOptions = { fontSize: 120, letterSpacing: '4px' };
+    }
+  }
+
+  update(value: { type: string; instance: MediaQuery }): void {
+    if (value.instance instanceof MediaQuery && value.instance.currentBreakpoint?.name) {
+      this.handleFont(value.instance.currentBreakpoint.name);
     }
   }
 

@@ -1,9 +1,9 @@
-export interface Observer<T> {
-  update(value: T): void;
+export interface Observer {
+  update(value: { type: string; instance: Subject }): void;
 }
 
-export interface Subject<T> {
-  attach(key: string, observer: Observer<T>): void;
+export interface Subject {
+  attach(key: string, observer: Observer): void;
   detach(key: string): void;
   notify(): void;
 }
