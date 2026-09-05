@@ -15,32 +15,38 @@ import MediaQuery from './MediaQuery';
 
 gsap.registerPlugin(ScrollTrigger, Draggable, InertiaPlugin, SplitText, CSSRulePlugin);
 
-class ProjectBorders {
-  #borders = gsap.utils.toArray<HTMLDivElement>('.project-border');
+class ProjectBorder {
+  #container: HTMLElement | null = null;
 
-  constructor() {}
+  constructor(container: HTMLElement) {
+    this.#container = container;
+  }
 
   init() {
-    for (const border of this.#borders) {
-      const parent = border.parentElement;
-
-      gsap.fromTo(
-        border,
-        { height: '0%', opacity: '60%' },
-        {
-          scrollTrigger: {
-            trigger: parent,
-            scrub: true,
-            start: 'top 84%',
-            end: 'bottom 72%',
-            // markers: true,
-          },
-          height: 'calc(100% + 2 * 2px)',
-          opacity: '100%',
-          ease: 'power1.in',
-        }
-      );
+    if (!this.#container) {
+      return null;
     }
+
+    const border = document.createElement('div');
+    border.classList.add('project-border');
+    this.#container.appendChild(border);
+
+    gsap.fromTo(
+      border,
+      { height: '0%', opacity: '60%' },
+      {
+        scrollTrigger: {
+          trigger: this.#container,
+          scrub: true,
+          start: 'top 84%',
+          end: 'bottom 72%',
+          // markers: true,
+        },
+        height: 'calc(100% + 2 * 2px)',
+        opacity: '100%',
+        ease: 'power1.in',
+      }
+    );
   }
 }
 
@@ -62,9 +68,6 @@ function initialize() {
 
   const isMobile = 'ontouchstart' in window;
   const mediaQuery = new MediaQuery();
-
-  const borders = new ProjectBorders();
-  borders.init();
 
   // new InertiaScroll(true);
   {
@@ -107,6 +110,9 @@ function initialize() {
   {
     const projectSection = document.getElementById('first-project-section') as HTMLElement;
     const container = document.getElementById('first-project-carousel') as HTMLElement;
+
+    const border = new ProjectBorder(projectSection);
+    border.init();
 
     const projectGrid = new Grid(projectSection, { resizeTo: projectSection, maxRows: 1 });
 
