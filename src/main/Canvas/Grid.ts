@@ -97,16 +97,6 @@ class Grid extends Canvas {
     this.drawGrid();
   }
 
-  private drawBackground() {
-    if (!this.ctx) return null;
-
-    this.ctx.save();
-    this.ctx.translate(0, 0);
-    this.ctx.fillStyle = this.colors.background;
-    this.ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
-    this.ctx.restore();
-  }
-
   private drawInnerBox(x: number, y: number) {
     if (!this.ctx) return null;
 
@@ -254,7 +244,6 @@ class Grid extends Canvas {
     if (!this.ctx) return null;
 
     this.clearCanvas();
-    this.drawBackground();
 
     this.boxPostions.outer.forEach((pos) => {
       this.drawOuterBox(pos.x, pos.y);

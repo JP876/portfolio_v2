@@ -3,6 +3,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Draggable } from 'gsap/Draggable';
 import { InertiaPlugin } from 'gsap/InertiaPlugin';
 import { SplitText } from 'gsap/SplitText';
+import { CSSRulePlugin } from 'gsap/CSSRulePlugin';
 
 import { GAP } from './consts';
 import RevealText from './RevealText';
@@ -12,7 +13,36 @@ import TextEffect from './Canvas/TextEffect';
 import { copyToClipboard } from './utils';
 import MediaQuery from './MediaQuery';
 
-gsap.registerPlugin(ScrollTrigger, Draggable, InertiaPlugin, SplitText);
+gsap.registerPlugin(ScrollTrigger, Draggable, InertiaPlugin, SplitText, CSSRulePlugin);
+
+class ProjectBorders {
+  #borders = gsap.utils.toArray<HTMLDivElement>('.project-border');
+
+  constructor() {}
+
+  init() {
+    for (const border of this.#borders) {
+      const parent = border.parentElement;
+
+      gsap.fromTo(
+        border,
+        { height: '0%', opacity: '60%' },
+        {
+          scrollTrigger: {
+            trigger: parent,
+            scrub: true,
+            start: 'top 84%',
+            end: 'bottom 72%',
+            // markers: true,
+          },
+          height: 'calc(100% + 2 * 2px)',
+          opacity: '100%',
+          ease: 'power1.in',
+        }
+      );
+    }
+  }
+}
 
 function initialize() {
   // override CSS to prevent native scrolling
@@ -33,13 +63,16 @@ function initialize() {
   const isMobile = 'ontouchstart' in window;
   const mediaQuery = new MediaQuery();
 
+  const borders = new ProjectBorders();
+  borders.init();
+
   // new InertiaScroll(true);
   {
     const heroSection = document.getElementById('hero-section') as HTMLElement;
     const heroGrid = new Grid(heroSection, { animate: {} });
 
     heroGrid.initGrid();
-    heroGrid.canvas.style.zIndex = '-1';
+    heroGrid.canvas.style.zIndex = '-10';
 
     const author = new TextEffect(document.getElementById('dev') as HTMLElement, 'Josip Popović', {
       fontFamily: 'Corben',
@@ -74,24 +107,11 @@ function initialize() {
   {
     const projectSection = document.getElementById('first-project-section') as HTMLElement;
     const container = document.getElementById('first-project-carousel') as HTMLElement;
-    const carouselSection = container.parentElement as HTMLElement;
 
-    function handleResize() {
-      const carouselRect = carouselSection.getBoundingClientRect();
-      const containerRect = projectSection.getBoundingClientRect();
-
-      const x = carouselRect.x - containerRect.x;
-      const y = carouselRect.y - containerRect.y;
-
-      projectGrid.ctx?.clearRect(x, y, carouselRect.width, carouselRect.height);
-    }
-
-    const projectGrid = new Grid(projectSection, { resizeTo: projectSection, onResize: handleResize, maxRows: 1 });
+    const projectGrid = new Grid(projectSection, { resizeTo: projectSection, maxRows: 1 });
 
     projectGrid.initGrid();
     projectGrid.canvas.style.zIndex = '-1';
-
-    handleResize();
 
     const description = new RevealText('#first-project-description', '#first-project-description p', {
       highlightColor: 'rgb(0, 144, 255)',
