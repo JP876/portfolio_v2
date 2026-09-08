@@ -12,6 +12,7 @@ import Grid from './Canvas/Grid';
 import TextEffect from './Canvas/TextEffect';
 import { copyToClipboard } from './utils';
 import MediaQuery from './MediaQuery';
+import Settings from './Settings';
 
 gsap.registerPlugin(ScrollTrigger, Draggable, InertiaPlugin, SplitText, CSSRulePlugin);
 
@@ -33,7 +34,7 @@ class ProjectBorder {
 
     gsap.fromTo(
       border,
-      { height: '0%', opacity: '60%' },
+      { height: '0%' },
       {
         scrollTrigger: {
           trigger: this.#container,
@@ -43,7 +44,6 @@ class ProjectBorder {
           // markers: true,
         },
         height: 'calc(100% + 2 * 2px)',
-        opacity: '100%',
         ease: 'power1.in',
       }
     );
@@ -78,18 +78,12 @@ function initialize() {
     heroGrid.canvas.style.zIndex = '-10';
 
     const author = new TextEffect(document.getElementById('dev') as HTMLElement, 'Josip Popović', {
-      fontFamily: 'Corben',
-      gradient: [
-        { offset: 0.1, color: 'rgb(0, 0, 0)' },
-        { offset: 0.3, color: 'rgb(0, 117, 213)' },
-        { offset: 0.5, color: 'rgb(35, 182, 255)' },
-        { offset: 0.7, color: 'rgb(0, 117, 213)' },
-        { offset: 0.9, color: 'rgb(0, 0, 0)' },
-      ],
+      fontFamily: Settings.instance.theme.fontFamily.heading,
     });
 
     author.init();
     mediaQuery.attach('dev', author);
+    Settings.instance.attach('dev', author);
 
     if (!isMobile) {
       function animate() {
@@ -150,6 +144,7 @@ function initialize() {
   }
 
   mediaQuery.notify();
+  Settings.instance.notify();
 }
 
 window.addEventListener('load', initialize, false);

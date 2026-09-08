@@ -1,6 +1,7 @@
 import Canvas from '.';
 import type { GridOptions } from './types';
 import { getRandomFloat, getRandomInt, getRandomNumArray, throttle } from '../utils';
+import Settings from '../Settings';
 
 type PostionType = { x: number; y: number };
 type BoxPostionsType = {
@@ -24,11 +25,7 @@ class Grid extends Canvas {
   private boxPostions: BoxPostionsType = { outer: [], inner: [], all: [] };
 
   interval: ReturnType<typeof setTimeout> | null = null;
-  colors = {
-    outer: 'rgba(0, 0, 0, 0.12)',
-    inner: 'rgba(0, 128, 255, 0.18)',
-    background: 'rgba(136, 136, 136, 0.06)',
-  };
+  colors = { outer: '', inner: '' };
 
   constructor(container: HTMLElement, options?: GridOptions) {
     super(container, options);
@@ -46,6 +43,14 @@ class Grid extends Canvas {
     this.gridElement.style.gap = `${this.gap}px`;
 
     this.container?.appendChild(this.gridElement);
+
+    if (Settings.instance.theme) {
+      const { secondary, grey } = Settings.instance.theme;
+      this.colors = {
+        outer: grey[200],
+        inner: secondary.extraLight,
+      };
+    }
 
     window.addEventListener(
       'resize',
@@ -103,14 +108,12 @@ class Grid extends Canvas {
     this.ctx.save();
     this.ctx.translate(x, y);
 
+    const { width: iW, height: iH } = this.boxSizes.inner;
+    const { width: oW, height: oH } = this.boxSizes.outer;
+
     this.ctx.strokeStyle = this.colors.inner;
-    this.ctx.lineWidth = 3;
-    this.ctx.strokeRect(
-      this.boxSizes.inner.width,
-      this.boxSizes.inner.height,
-      this.boxSizes.outer.width - this.boxSizes.inner.width * 2,
-      this.boxSizes.outer.height - this.boxSizes.inner.height * 2
-    );
+    this.ctx.lineWidth = 3.2;
+    this.ctx.strokeRect(iW, iH, oW - iW * 2, oH - iH * 2);
     this.ctx.restore();
   }
 
@@ -120,6 +123,7 @@ class Grid extends Canvas {
     this.ctx.save();
     this.ctx.translate(x, y);
     this.ctx.strokeStyle = this.colors.outer;
+    this.ctx.lineWidth = 1.2;
     this.ctx.strokeRect(0, 0, this.boxSizes.outer.width, this.boxSizes.outer.height);
     this.ctx.restore();
   }
