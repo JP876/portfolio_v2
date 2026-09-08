@@ -17,9 +17,7 @@
 
   <body>
     <section class="hero center" id="hero-section">
-      <div class="center">
-        <div class="hero-author center" id="dev"></div>
-      </div>
+      <div class="hero-author" id="dev"></div>
       <div class="hero-description">
         <p>4+ years of professional experience in React</p>
         <p>Background in mechatronics engineering</p>
@@ -31,123 +29,117 @@
       </button>
     </section>
 
-    <section class="center">
-      <section class="wrapper projects">
-        <section class="project" id="first-project-section">
-          <h2 class="project-title">WeatherSphere</h2>
+    <section class="wrapper projects">
+      <section class="project" id="first-project-section">
+        <h2 class="project-title">WeatherSphere</h2>
 
-          <div class="project-carousel">
-            <div class="carousel" id="first-project-carousel" aria-label="Horizontal carousel of images">
-              <div class="carousel-slide" id="first-project-slide">
-                <img loading="lazy" src="/projects/weather_sphere_1.png" />
-              </div>
-              <div class="carousel-slide" id="first-project-slide">
-                <img loading="lazy" src="/projects/weather_sphere_2.png" />
-              </div>
-              <div class="carousel-slide" id="first-project-slide">
-                <img loading="lazy" src="/projects/weather_sphere_3.png" />
-              </div>
-              <div class="carousel-slide" id="first-project-slide">
-                <img loading="lazy" src="/projects/weather_sphere_4.png" />
-              </div>
+        <div class="project-carousel">
+          <div class="carousel" aria-label="Horizontal carousel of images">
+            <div class="carousel-slide">
+              <img loading="lazy" src="/projects/weather_sphere_1.png" />
             </div>
-
-            <nav class="carousel-nav">
-              <button class="prev" id="first-prev" tabindex="0" aria-label="Previous Slide"></button>
-              <button class="next" id="first-next" tabindex="0" aria-label="Next Slide"></button>
-            </nav>
-
-            <svg
-              class="carousel-progress"
-              id="first-project-carousel-progress"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 0 0"
-            >
-              <path stroke="#fff" stroke-width="2" stroke-linecap="round" d="" />
-            </svg>
-          </div>
-
-          <div id="first-project-description">
-            <p class="project-description">
-              Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
-              et dolore magna aliquyam erat, <span id="highlight">sed diam voluptua</span>. At vero eos et accusam et
-              justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor
-              sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam.
-            </p>
-          </div>
-
-          <div class="project-footer">
-            <div class="project-tags">
-              <p>React</p>
-              <p>Typescript</p>
-              <p>Three.js</p>
-              <p>Express</p>
+            <div class="carousel-slide">
+              <img loading="lazy" src="/projects/weather_sphere_2.png" />
             </div>
-            <div class="project-links">
-              <a href="#" target="_blank" rel="noopener noreferrer">Source</a>
-              <a href="#" target="_blank" rel="noopener noreferrer">Live</a>
+            <div class="carousel-slide">
+              <img loading="lazy" src="/projects/weather_sphere_3.png" />
+            </div>
+            <div class="carousel-slide">
+              <img loading="lazy" src="/projects/weather_sphere_4.png" />
             </div>
           </div>
+
+          <nav class="carousel-nav">
+            <button data-type="prev" tabindex="0" aria-label="Previous Slide"></button>
+            <button data-type="next" tabindex="0" aria-label="Next Slide"></button>
+          </nav>
+
+          <svg class="carousel-progress" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0">
+            <path stroke="#fff" stroke-width="2" stroke-linecap="round" d="" />
+          </svg>
+        </div>
+
+        <div>
+          <p class="project-description">
+            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
+            dolore magna aliquyam erat, <span id="highlight">sed diam voluptua</span>. At vero eos et accusam et justo
+            duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam.
+          </p>
+        </div>
+
+        <div class="project-footer">
+          <div class="project-tags">
+            <p>React</p>
+            <p>Typescript</p>
+            <p>Three.js</p>
+            <p>Express</p>
+          </div>
+
+          <div class="project-links">
+            <a href="#" target="_blank" rel="noopener noreferrer">Source</a>
+            <a href="#" target="_blank" rel="noopener noreferrer">Live</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="project">
+        <div class="project-info" id="second-project-info">
+          <h5 class="project-title">WeatherSphere</h5>
+          <p class="project-description">
+            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
+            dolore magna aliquyam erat, sed diam voluptua.
+            <span id="highlight">At vero eos et accusam</span> et justo duo dolores et ea rebum. Stet clita kasd
+            gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur
+            sadipscing elitr, sed diam
+          </p>
+        </div>
+
+        <section class="project-carousel">
+          <div class="carousel" id="second-project" aria-label="Horizontal carousel of images">
+            <div class="carousel-slide" id="second-project-slide">
+              <img src="/projects/weather_sphere_1.png" />
+            </div>
+            <div class="carousel-slide" id="second-project-slide">
+              <img src="/projects/weather_sphere_2.png" />
+            </div>
+            <div class="carousel-slide" id="second-project-slide">
+              <img src="/projects/weather_sphere_3.png" />
+            </div>
+            <div class="carousel-slide" id="second-project-slide">
+              <img src="/projects/weather_sphere_4.png" />
+            </div>
+          </div>
+
+          <nav class="carousel-nav">
+            <button class="prev" id="second-prev" tabindex="0" aria-label="Previous Slide"></button>
+            <button class="next" id="second-next" tabindex="0" aria-label="Next Slide"></button>
+          </nav>
+
+          <svg
+            class="carousel-progress"
+            id="second-project-carousel-progress"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 0 0"
+          >
+            <path stroke="#000" stroke-width="2" stroke-linecap="round" d="" />
+          </svg>
         </section>
+      </section>
 
-        <section class="project">
-          <div class="project-info" id="second-project-info">
-            <h5 class="project-title">WeatherSphere</h5>
-            <p class="project-description">
-              Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
-              et dolore magna aliquyam erat, sed diam voluptua.
-              <span id="highlight">At vero eos et accusam</span> et justo duo dolores et ea rebum. Stet clita kasd
-              gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur
-              sadipscing elitr, sed diam
-            </p>
-          </div>
-
-          <section class="project-carousel">
-            <div class="carousel" id="second-project" aria-label="Horizontal carousel of images">
-              <div class="carousel-slide" id="second-project-slide">
-                <img src="/projects/weather_sphere_1.png" />
-              </div>
-              <div class="carousel-slide" id="second-project-slide">
-                <img src="/projects/weather_sphere_2.png" />
-              </div>
-              <div class="carousel-slide" id="second-project-slide">
-                <img src="/projects/weather_sphere_3.png" />
-              </div>
-              <div class="carousel-slide" id="second-project-slide">
-                <img src="/projects/weather_sphere_4.png" />
-              </div>
-            </div>
-
-            <nav class="carousel-nav">
-              <button class="prev" id="second-prev" tabindex="0" aria-label="Previous Slide"></button>
-              <button class="next" id="second-next" tabindex="0" aria-label="Next Slide"></button>
-            </nav>
-
-            <svg
-              class="carousel-progress"
-              id="second-project-carousel-progress"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 0 0"
-            >
-              <path stroke="#000" stroke-width="2" stroke-linecap="round" d="" />
-            </svg>
-          </section>
-        </section>
-
-        <section class="project">
-          <div class="info">
-            <h5 class="title">WeatherSphere</h5>
-            <p class="description">
-              Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
-              et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
-              Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
-              amet, consetetur sadipscing elitr, sed diam
-            </p>
-          </div>
-          <div class="gallery">
-            <div></div>
-          </div>
-        </section>
+      <section class="project">
+        <div class="info">
+          <h5 class="title">WeatherSphere</h5>
+          <p class="description">
+            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
+            dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet
+            clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet,
+            consetetur sadipscing elitr, sed diam
+          </p>
+        </div>
+        <div class="gallery">
+          <div></div>
+        </div>
       </section>
     </section>
 

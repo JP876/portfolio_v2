@@ -103,7 +103,6 @@ function initialize() {
 
   {
     const projectSection = document.getElementById('first-project-section') as HTMLElement;
-    const container = document.getElementById('first-project-carousel') as HTMLElement;
 
     const border = new ProjectBorder(projectSection);
     border.init();
@@ -113,15 +112,17 @@ function initialize() {
     projectGrid.initGrid();
     projectGrid.canvas.style.zIndex = '-1';
 
-    const description = new RevealText('#first-project-description', '#first-project-description p', {
-      highlightColor: 'rgb(0, 144, 255)',
+    const descriptionEl = projectSection.querySelector('.project-description') as HTMLElement;
+    const description = new RevealText(descriptionEl.parentElement!, descriptionEl, {
+      highlightColor: Settings.instance.theme.primary.main,
     });
     description.initialize();
 
-    const slides = gsap.utils.toArray<HTMLElement>('#first-project-slide');
-    const prev = document.querySelector('#first-prev') as HTMLButtonElement;
-    const next = document.querySelector('#first-next') as HTMLButtonElement;
-    const progress = document.querySelector('#first-project-carousel-progress') as SVGElement;
+    const slides = gsap.utils.toArray<HTMLElement>(projectSection.querySelectorAll('.carousel-slide'));
+    const container = projectSection.querySelector('.carousel') as HTMLElement;
+    const prev = projectSection.querySelector('[data-type="prev"]') as HTMLButtonElement;
+    const next = projectSection.querySelector('[data-type="next"]') as HTMLButtonElement;
+    const progress = projectSection.querySelector('.carousel-progress') as SVGElement;
 
     const gallery = new ProjectGallery(slides, container, prev, next, progress);
     gallery.initializeGallery();

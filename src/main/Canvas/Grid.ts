@@ -34,13 +34,12 @@ class Grid extends Canvas {
     if (options?.maxRows) this.rowsCount = options.maxRows;
 
     this.gridElement.className = 'canvas-grid';
-    this.gridElement.style.gridTemplateColumns = `
-      repeat(auto-fill, minmax(${options?.boxMinWidth ? options.boxMinWidth + 'px' : '60px'}, 1fr))
-    `;
-    this.gridElement.style.gridTemplateRows = `
-      repeat(auto-fill, minmax(${options?.boxMinWidth ? options.boxMinWidth + 'px' : '60px'}, 1fr))
-    `;
-    this.gridElement.style.gap = `${this.gap}px`;
+    this.gridElement.style.setProperty('--grid-gap', this.gap + 'px');
+
+    if (options?.boxMinWidth) {
+      this.gridElement.style.setProperty('--grid-column-min-width', options.boxMinWidth + 'px');
+      this.gridElement.style.setProperty('--grid-row-min-width', options.boxMinWidth + 'px');
+    }
 
     this.container?.appendChild(this.gridElement);
 

@@ -102,7 +102,6 @@ class Settings implements Subject {
         theme.primary[lastValue] = styles.getPropertyValue(key);
       }
     }
-    console.log(theme);
 
     return theme;
   }

@@ -13,14 +13,18 @@ export type RevealTextConfig = {
 };
 
 class RevealText {
-  private container: HTMLElement | string | null = null;
-  private text: HTMLElement | string | null = null;
+  private container: Element | HTMLElement | string | null = null;
+  private text: Element | HTMLElement | string | null = null;
   private scrollTrigger: ScrollTrigger | null = null;
   private splitText: SplitText | null = null;
   private tl: GSAPTimeline = gsap.timeline();
   private config: RevealTextConfig = {};
 
-  constructor(container: HTMLElement | string, text: HTMLElement | string, config: RevealTextConfig) {
+  constructor(
+    container: Element | HTMLElement | string,
+    text: Element | HTMLElement | string,
+    config: RevealTextConfig
+  ) {
     this.container = container;
     this.text = text;
     this.config = {
@@ -47,7 +51,7 @@ class RevealText {
 
     this.scrollTrigger = ScrollTrigger.create({
       start: 'top 100%',
-      end: 'bottom 92%',
+      end: 'bottom 90%',
       ...(this.config?.scrollTriggerOptions || {}),
       scrub: true,
       animation: this.tl,
