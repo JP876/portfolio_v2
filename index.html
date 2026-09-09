@@ -23,10 +23,6 @@
         <p>Background in mechatronics engineering</p>
         <p>Based in Zagreb, Croatia</p>
       </div>
-      <button class="button" data-color="primary" id="email-btn">
-        popovic_josip[at]protonmail.com
-        <span></span>
-      </button>
     </section>
 
     <section class="wrapper projects">
@@ -100,48 +96,74 @@
         </div>
       </section>
 
-      <section class="project">
-        <div class="project-info" id="second-project-info">
-          <h5 class="project-title">WeatherSphere</h5>
-          <p class="project-description">
-            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
-            dolore magna aliquyam erat, sed diam voluptua.
-            <span id="highlight">At vero eos et accusam</span> et justo duo dolores et ea rebum. Stet clita kasd
-            gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur
-            sadipscing elitr, sed diam
-          </p>
-        </div>
+      <section class="project" id="first-project-section">
+        <h2 class="project-title">WeatherSphere</h2>
 
-        <section class="project-carousel">
-          <div class="carousel" id="second-project" aria-label="Horizontal carousel of images">
-            <div class="carousel-slide" id="second-project-slide">
-              <img src="/projects/weather_sphere_1.png" />
+        <div class="project-carousel">
+          <div class="carousel" aria-label="Horizontal carousel of images">
+            <div class="carousel-slide">
+              <img loading="lazy" src="/projects/weather_sphere_1.png" />
             </div>
-            <div class="carousel-slide" id="second-project-slide">
-              <img src="/projects/weather_sphere_2.png" />
+            <div class="carousel-slide">
+              <img loading="lazy" src="/projects/weather_sphere_2.png" />
             </div>
-            <div class="carousel-slide" id="second-project-slide">
-              <img src="/projects/weather_sphere_3.png" />
+            <div class="carousel-slide">
+              <img loading="lazy" src="/projects/weather_sphere_3.png" />
             </div>
-            <div class="carousel-slide" id="second-project-slide">
-              <img src="/projects/weather_sphere_4.png" />
+            <div class="carousel-slide">
+              <img loading="lazy" src="/projects/weather_sphere_4.png" />
             </div>
           </div>
 
           <nav class="carousel-nav">
-            <button class="prev" id="second-prev" tabindex="0" aria-label="Previous Slide"></button>
-            <button class="next" id="second-next" tabindex="0" aria-label="Next Slide"></button>
+            <button data-type="prev" tabindex="0" aria-label="Previous Slide"></button>
+            <button data-type="next" tabindex="0" aria-label="Next Slide"></button>
           </nav>
 
-          <svg
-            class="carousel-progress"
-            id="second-project-carousel-progress"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 0 0"
-          >
-            <path stroke="#000" stroke-width="2" stroke-linecap="round" d="" />
+          <svg class="carousel-progress" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0">
+            <path stroke="#fff" stroke-width="2" stroke-linecap="round" d="" />
           </svg>
-        </section>
+        </div>
+
+        <div>
+          <p class="project-description">
+            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
+            dolore magna aliquyam erat, <span id="highlight">sed diam voluptua</span>. At vero eos et accusam et justo
+            duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam.
+          </p>
+        </div>
+
+        <div class="project-footer">
+          <div class="project-tags">
+            <p>React</p>
+            <p>Typescript</p>
+            <p>Three.js</p>
+            <p>Express</p>
+          </div>
+
+          <div class="project-links">
+            <a
+              class="button"
+              data-size="small"
+              data-color="secondary"
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Source<span></span
+            ></a>
+            <a
+              class="button"
+              data-size="small"
+              data-color="secondary"
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Live<span></span
+            ></a>
+          </div>
+        </div>
       </section>
 
       <section class="project">
@@ -158,6 +180,27 @@
           <div></div>
         </div>
       </section>
+    </section>
+
+    <section class="contact center">
+      <div class="contact__info">
+        <h4>Contact info</h4>
+        <div>
+          <button class="button" data-color="primary" id="email-btn">
+            Email
+            <span></span>
+          </button>
+          <a
+            class="button"
+            data-color="primary"
+            href="https://github.com/JP876"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            GitHub<span></span
+          ></a>
+        </div>
+      </div>
     </section>
 
     <script type="module" src="/src/main"></script>

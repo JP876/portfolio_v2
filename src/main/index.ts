@@ -105,6 +105,11 @@ function initialize() {
   const isMobile = 'ontouchstart' in window;
   const mediaQuery = new MediaQuery();
 
+  const emailBtn = document.getElementById('email-btn') as HTMLButtonElement;
+  emailBtn.addEventListener('click', async () => {
+    copyToClipboard('popovic_josip@protonmail.com');
+  });
+
   // new InertiaScroll(true);
   {
     const heroSection = document.getElementById('hero-section') as HTMLElement;
@@ -130,11 +135,6 @@ function initialize() {
     }
 
     // gsap.from('.hero-description p', { stagger: 0.2, x: '-100%' });
-
-    const btn = document.getElementById('email-btn') as HTMLButtonElement;
-    btn.addEventListener('click', async () => {
-      copyToClipboard('popovic_josip@protonmail.com');
-    });
   }
 
   {
@@ -144,19 +144,11 @@ function initialize() {
   }
 
   {
-    const description = new RevealText('#second-project-info', '#second-project-info p', {
-      highlightColor: 'rgb(0, 255, 30)',
-    });
-    description.initialize();
+    const contactSection = document.querySelector<HTMLElement>('.contact')!;
 
-    const slides = gsap.utils.toArray<HTMLElement>('#second-project-slide');
-    const prev = document.querySelector('#second-prev') as HTMLButtonElement;
-    const next = document.querySelector('#second-next') as HTMLButtonElement;
-    const container = document.getElementById('second-project') as HTMLElement;
-    const progress = document.querySelector('#second-project-carousel-progress') as SVGElement;
-
-    const gallery = new ProjectGallery(slides, container, prev, next, progress);
-    gallery.initializeGallery();
+    const contactGrid = new Grid(contactSection, { animate: {} });
+    contactGrid.initGrid();
+    contactGrid.canvas.style.zIndex = '-10';
   }
 
   mediaQuery.notify();
