@@ -10,7 +10,7 @@ export type GridOptions = CanvasOptions & {
   gap?: number;
   maxRows?: number;
   animate?: { timeout?: number };
-  offset?: (() => { x: number; y: number }) | null;
+  offset?: (() => { x: number; y: number }) | { x: number; y: number } | null;
   onResize?: () => void;
 };
 

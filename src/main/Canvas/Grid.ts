@@ -23,6 +23,7 @@ class Grid extends Canvas {
   private gap = 24;
   private randomGrid: number[][] = [];
   private boxPostions: BoxPostionsType = { outer: [], inner: [], all: [] };
+  private offset: GridOptions['offset'] = null;
 
   interval: ReturnType<typeof setTimeout> | null = null;
   colors = { outer: '', inner: '' };
@@ -32,6 +33,7 @@ class Grid extends Canvas {
 
     if (options?.gap) this.gap = options.gap;
     if (options?.maxRows) this.rowsCount = options.maxRows;
+    if (options?.offset) this.offset = options.offset;
 
     this.gridElement.className = 'canvas-grid';
     this.gridElement.style.setProperty('--grid-gap', this.gap + 'px');
@@ -182,8 +184,14 @@ class Grid extends Canvas {
     this.boxPostions = { outer: [], inner: [], all: [] };
 
     const firstRow: PostionType[] = [];
-    const offsetX = -this.boxSizes.outer.width / 2 - +this.gap / 2;
-    const offsetY = -this.boxSizes.outer.height / 2 - +this.gap / 2;
+    let offsetX = -this.boxSizes.outer.width / 2 - +this.gap / 2;
+    let offsetY = -this.boxSizes.outer.height / 2 - +this.gap / 2;
+
+    if (this.offset) {
+      const { x, y } = typeof this.offset === 'function' ? this.offset() : this.offset;
+      offsetX += x;
+      offsetY += y;
+    }
 
     for (let i = 0; i < this.columnsCount; i++) {
       firstRow.push({

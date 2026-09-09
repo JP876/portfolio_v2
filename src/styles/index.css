@@ -441,7 +441,7 @@
     --ff-heading: 'Corben', serif;
     --ff-body: 'Varela', sans-serif;
 
-    --fs-xs: clamp(0.72rem, 1.6vw, 0.86rem);
+    --fs-xs: clamp(0.7rem, 1.6vw, 0.8rem);
     --fs-sm: clamp(0.86rem, 2vw, 1.14rem);
     --fs-md: clamp(1.2rem, 2vw + 0.4rem, 1.4rem);
     --fs-lg: clamp(1.8rem, 2.4vw + 1rem, 2.4rem);
@@ -481,6 +481,9 @@
     --background-main: var(--clr-blue-500);
     --background-dark: var(--clr-blue-700);
     --background-extra-dark: var(--clr-blue-900);
+
+    --transition-duration-regular: 0.4s;
+    --transition-duration-short: 0.2s;
   }
 
   html {
@@ -515,11 +518,16 @@
       color: var(--text-brand-dark);
     }
   }
+
+  button {
+    border: none;
+  }
 }
 
 @layer layout {
   .wrapper {
     --wrapper-max-width: 64rem;
+
     max-width: min(var(--wrapper-max-width), 100%);
     padding-inline: min(2.4rem, 4.8vw);
     margin-inline: auto;
@@ -586,30 +594,54 @@
     }
   }
 
-  .primary-btn {
-    --border-color: var(--background-main);
-    --border-width: 2px;
+  .button {
+    --button-border-color: var(--clr-grey-800);
+    --button-border-width: 2px;
+    --button-padding-inline: var(--sizing-sm);
+    --button-padding-block: var(--sizing-xs);
+    --button-font-size: var(--font-size-sm);
 
     cursor: pointer;
-    padding-inline: var(--sizing-sm);
-    padding-block: var(--sizing-xs);
-    border: none;
+    padding-inline: var(--button-padding-inline);
+    padding-block: var(--button-padding-block);
     position: relative;
     text-transform: uppercase;
     text-align: center;
     color: var(--text-main);
-    font-size: var(--font-size-sm);
-    letter-spacing: 2px;
+    font-size: var(--button-font-size);
     overflow: hidden;
+    letter-spacing: 2px;
+
+    &[data-size='small'] {
+      --button-padding-inline: var(--sizing-xs);
+      --button-padding-block: 2px;
+      --button-font-size: var(--font-size-sm);
+      --button-border-width: 1px;
+    }
+
+    &[data-size='large'] {
+      --button-padding-inline: var(--sizing-md);
+      --button-padding-block: var(--sizing-sm);
+      --button-font-size: var(--font-size-md);
+    }
+
+    &[data-color='primary'] {
+      --button-border-color: var(--background-main);
+    }
+
+    &[data-color='secondary'] {
+      --button-border-color: var(--background-accent-main);
+    }
 
     &:before,
     &:after {
       content: '';
       position: absolute;
       width: 100%;
-      height: var(--border-width);
-      background-color: var(--border-color);
-      transition: all 0.4s;
+      height: var(--button-border-width);
+      background-color: var(--button-border-color);
+      transition: all;
+      transition-duration: var(--transition-duration-regular);
     }
 
     &:before {
@@ -635,10 +667,11 @@
     & span:after {
       content: '';
       position: absolute;
-      width: var(--border-width);
+      width: var(--button-border-width);
       height: 100%;
-      background-color: var(--border-color);
-      transition: all 0.4s;
+      background-color: var(--button-border-color);
+      transition: all;
+      transition-duration: var(--transition-duration-regular);
     }
 
     & span:after {
@@ -664,7 +697,7 @@
   .carousel {
     width: 100%;
     height: 100%;
-    gap: 10px;
+    gap: 20px;
     overflow-x: hidden;
     scroll-snap-type: x mandatory;
     display: flex;
@@ -680,7 +713,6 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    color: var(--text-main);
     scroll-snap-align: center;
     overflow: hidden;
 
@@ -694,7 +726,6 @@
   }
 
   .carousel-nav {
-    --button-position: min(16rem, 48vw);
     display: none; /* displayed in the JS */
     position: absolute;
     width: 100%;
@@ -712,17 +743,17 @@
       background-size: cover;
       overflow: visible;
       background-image: url("data:image/svg+xml,%3Csvg stroke='%23fff' fill='none' xmlns='http://www.w3.org/2000/svg' viewBox='0 1 22 15'%3E%3Cpath d='M2,11 11,2 20,11'/%3E%3C/svg%3E");
-    }
 
-    [data-type='prev'] {
-      transform: translateY(50%) rotate(-90deg);
-      bottom: calc(var(--button-position) / 2);
-    }
+      &[data-type='prev'] {
+        transform: translateY(50%) rotate(-90deg);
+        bottom: calc(var(--project-carousel-height) / 2);
+      }
 
-    [data-type='next'] {
-      transform: translateY(50%) rotate(90deg);
-      bottom: calc(var(--button-position) / 2);
-      right: 0;
+      &[data-type='next'] {
+        transform: translateY(50%) rotate(90deg);
+        bottom: calc(var(--project-carousel-height) / 2);
+        right: 0;
+      }
     }
   }
 
@@ -731,7 +762,7 @@
     position: absolute;
     width: 100%;
     height: 0.88rem;
-    bottom: calc(0rem - var(--sizing-md));
+    bottom: calc(0rem - var(--project-carousel-margin-bottom));
     left: 50%;
     transform: translate(-50%, 0%);
     opacity: 0.32;
@@ -744,7 +775,7 @@
   }
 
   .project {
-    --project-border-width: 2.4px;
+    --project-border-width: 2px;
 
     position: relative;
     display: flex;
@@ -752,7 +783,6 @@
     gap: var(--sizing-lg);
     padding-inline: var(--sizing-md);
     padding-block: var(--sizing-md);
-    transition: all 0.2s ease-in-out;
 
     &:after {
       content: '';
@@ -762,7 +792,7 @@
       width: 100%;
       height: 100%;
       z-index: -10;
-      background-color: var(--clr-white);
+      background-color: var(--clr-grey-100);
     }
 
     &:before {
@@ -789,6 +819,7 @@
   .project-title {
     font-size: var(--font-size-heading-lg);
     letter-spacing: 1px;
+    display: inline-block;
   }
 
   .project-description {
@@ -797,9 +828,12 @@
   }
 
   .project-carousel {
-    height: min(16rem, 48vw);
+    --project-carousel-height: min(16rem, 48vw);
+    --project-carousel-margin-bottom: var(--sizing-md);
+
+    height: var(--project-carousel-height);
     position: relative;
-    margin-bottom: var(--sizing-md);
+    margin-bottom: var(--project-carousel-margin-bottom);
   }
 
   .project-footer {
@@ -830,21 +864,10 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    gap: var(--sizing-xs);
+    gap: var(--sizing-sm);
 
     a {
       text-decoration: none;
-      border-bottom: 1px solid var(--text-high-contrast);
-      padding-block: 2px;
-      color: var(--text-high-contrast);
-      padding-inline: var(--sizing-xs);
-      font-size: var(--font-size-sm);
-      transition: all 0.2s ease;
-
-      &:hover {
-        border-color: var(--background-dark);
-        color: var(--text-brand-dark);
-      }
     }
   }
 }

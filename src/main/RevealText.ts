@@ -34,6 +34,11 @@ class RevealText {
     };
   }
 
+  set updateConfig(config: RevealTextConfig) {
+    this.config = { ...this.config, ...config };
+    this.initialize();
+  }
+
   initialize() {
     if (!this.container || !this.text) {
       return null;
