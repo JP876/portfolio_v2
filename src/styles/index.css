@@ -594,6 +594,16 @@
     }
   }
 
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+
+    a {
+      text-decoration: none;
+    }
+  }
+
   .button {
     --button-border-color: var(--clr-grey-800);
     --button-border-width: 2px;
@@ -612,6 +622,7 @@
     overflow: hidden;
     letter-spacing: 2px;
     background-color: var(--clr-grey-200);
+    line-height: 1.5;
 
     &[data-size='small'] {
       --button-padding-inline: var(--sizing-xs);

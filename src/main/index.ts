@@ -43,7 +43,7 @@ class ProjectBorder {
           end: 'bottom 72%',
           // markers: true,
         },
-        height: 'calc(100% + 2 * 2px)',
+        height: 'calc(100% + 2 * var(--project-border-width))',
         ease: 'power1.in',
       }
     );
@@ -76,8 +76,8 @@ class Project {
     const slides = this.#container.querySelectorAll<HTMLElement>('.carousel-slide');
 
     if (container && slides.length > 0) {
-      const prev = this.#container.querySelector('[data-type="prev"]') as HTMLButtonElement;
-      const next = this.#container.querySelector('[data-type="next"]') as HTMLButtonElement;
+      const prev = this.#container.querySelector('.carousel-nav [data-type="prev"]') as HTMLButtonElement;
+      const next = this.#container.querySelector(' carousel-nav [data-type="next"]') as HTMLButtonElement;
       const progress = this.#container.querySelector('.carousel-progress') as SVGElement;
 
       this.#gallery = new ProjectGallery([...slides], container, prev, next, progress);
@@ -105,12 +105,19 @@ function initialize() {
   const isMobile = 'ontouchstart' in window;
   const mediaQuery = new MediaQuery();
 
-  const emailBtn = document.getElementById('email-btn') as HTMLButtonElement;
-  emailBtn.addEventListener('click', async () => {
-    copyToClipboard('popovic_josip@protonmail.com');
-  });
+  {
+    const buttons = document.querySelectorAll('.button');
+    for (const btn of buttons) {
+      const spanEl = document.createElement('span');
+      btn.appendChild(spanEl);
+    }
 
-  // new InertiaScroll(true);
+    const emailBtn = document.getElementById('email-btn') as HTMLButtonElement;
+    emailBtn.addEventListener('click', async () => {
+      copyToClipboard('popovic_josip@protonmail.com');
+    });
+  }
+
   {
     const heroSection = document.getElementById('hero-section') as HTMLElement;
     const heroGrid = new Grid(heroSection, { animate: {} });
@@ -138,17 +145,14 @@ function initialize() {
   }
 
   {
-    const projectSection = document.getElementById('first-project-section') as HTMLElement;
-    const project = new Project(projectSection);
-    project.init();
-  }
+    const projectSections = [document.getElementById('first-project-section')];
 
-  {
-    const contactSection = document.querySelector<HTMLElement>('.contact')!;
-
-    const contactGrid = new Grid(contactSection, { animate: {} });
-    contactGrid.initGrid();
-    contactGrid.canvas.style.zIndex = '-10';
+    for (const section of projectSections) {
+      if (section) {
+        const project = new Project(section);
+        project.init();
+      }
+    }
   }
 
   mediaQuery.notify();
