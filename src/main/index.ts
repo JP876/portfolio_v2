@@ -10,7 +10,6 @@ import RevealText from './RevealText';
 import ProjectGallery from './ProjectGallery';
 import Grid from './Canvas/Grid';
 import TextEffect from './Canvas/TextEffect';
-import { copyToClipboard } from './utils';
 import MediaQuery from './MediaQuery';
 import Settings from './Settings';
 
@@ -112,9 +111,12 @@ function initialize() {
       btn.appendChild(spanEl);
     }
 
+    const a = document.createElement('a');
+    a.href = 'mailto:popovic_josip@protonmail.com';
+
     const emailBtn = document.getElementById('email-btn') as HTMLButtonElement;
-    emailBtn.addEventListener('click', async () => {
-      copyToClipboard('popovic_josip@protonmail.com');
+    emailBtn.addEventListener('click', () => {
+      a.click();
     });
   }
 
