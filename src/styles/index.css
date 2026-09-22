@@ -559,7 +559,6 @@
 
 @layer components {
   .hero {
-    margin-bottom: min(8rem, 12vh);
     height: 100vh;
     position: relative;
     flex-direction: column;
@@ -598,6 +597,8 @@
     display: flex;
     gap: 1rem;
     align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
 
     a {
       text-decoration: none;
@@ -784,6 +785,7 @@
     display: flex;
     flex-direction: column;
     gap: min(8rem, 12vh);
+    margin-block: min(8rem, 12vh);
   }
 
   .project {
@@ -796,25 +798,26 @@
     padding-inline: var(--sizing-md);
     padding-block: var(--sizing-md);
 
-    &:after {
+    &:after,
+    &:before {
       content: '';
       position: absolute;
+      z-index: -10;
+    }
+
+    &:after {
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      z-index: -10;
       background-color: var(--clr-grey-100);
     }
 
     &:before {
-      content: '';
-      position: absolute;
       top: calc(0px - var(--project-border-width));
       left: calc(0px - var(--project-border-width));
       width: calc(100% + 2 * var(--project-border-width));
       height: calc(100% + 2 * var(--project-border-width));
-      z-index: -10;
       background-color: var(--clr-grey-200);
     }
   }
@@ -917,6 +920,20 @@
       a {
         text-decoration: none;
       }
+    }
+  }
+
+  footer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-block: var(--sizing-sm);
+    background-color: var(--clr-grey-200);
+    font-size: var(--font-size-regular);
+
+    span {
+      color: var(--text-brand-dark);
     }
   }
 }

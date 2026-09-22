@@ -76,7 +76,7 @@ class Project {
 
     if (container && slides.length > 0) {
       const prev = this.#container.querySelector('.carousel-nav [data-type="prev"]') as HTMLButtonElement;
-      const next = this.#container.querySelector(' carousel-nav [data-type="next"]') as HTMLButtonElement;
+      const next = this.#container.querySelector('.carousel-nav [data-type="next"]') as HTMLButtonElement;
       const progress = this.#container.querySelector('.carousel-progress') as SVGElement;
 
       this.#gallery = new ProjectGallery([...slides], container, prev, next, progress);
@@ -147,7 +147,11 @@ function initialize() {
   }
 
   {
-    const projectSections = [document.getElementById('first-project-section')];
+    const projectSections = [
+      document.getElementById('first-project-section'),
+      document.getElementById('second-project-section'),
+      document.getElementById('third-project-section'),
+    ];
 
     for (const section of projectSections) {
       if (section) {
