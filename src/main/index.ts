@@ -6,84 +6,13 @@ import { SplitText } from 'gsap/SplitText';
 import { CSSRulePlugin } from 'gsap/CSSRulePlugin';
 
 import { GAP } from './consts';
-import RevealText from './RevealText';
-import ProjectGallery from './ProjectGallery';
 import Grid from './Canvas/Grid';
 import TextEffect from './Canvas/TextEffect';
 import MediaQuery from './MediaQuery';
 import Settings from './Settings';
+import Project from './Project';
 
 gsap.registerPlugin(ScrollTrigger, Draggable, InertiaPlugin, SplitText, CSSRulePlugin);
-
-class ProjectBorder {
-  #container: HTMLElement | null = null;
-
-  constructor(container: HTMLElement) {
-    this.#container = container;
-  }
-
-  init() {
-    if (!this.#container) {
-      return null;
-    }
-
-    const border = document.createElement('div');
-    border.classList.add('project-border');
-    this.#container.appendChild(border);
-
-    gsap.fromTo(
-      border,
-      { height: '0%' },
-      {
-        scrollTrigger: {
-          trigger: this.#container,
-          scrub: true,
-          start: 'top 84%',
-          end: 'bottom 72%',
-          // markers: true,
-        },
-        height: 'calc(100% + 2 * var(--project-border-width))',
-        ease: 'power1.in',
-      }
-    );
-  }
-}
-
-class Project {
-  #container: HTMLElement | null = null;
-  #border: ProjectBorder | null = null;
-  #description: RevealText | null = null;
-  #gallery: ProjectGallery | null = null;
-
-  constructor(container: HTMLElement) {
-    this.#container = container;
-  }
-
-  init() {
-    if (!this.#container) return null;
-
-    this.#border = new ProjectBorder(this.#container);
-    this.#border.init();
-
-    const descriptionEl = this.#container.querySelector('.project-description') as HTMLElement;
-    this.#description = new RevealText(descriptionEl.parentElement!, descriptionEl, {
-      highlightColor: Settings.instance.theme.primary.main,
-    });
-    this.#description.initialize();
-
-    const container = this.#container.querySelector<HTMLElement>('.carousel');
-    const slides = this.#container.querySelectorAll<HTMLElement>('.carousel-slide');
-
-    if (container && slides.length > 0) {
-      const prev = this.#container.querySelector('.carousel-nav [data-type="prev"]') as HTMLButtonElement;
-      const next = this.#container.querySelector('.carousel-nav [data-type="next"]') as HTMLButtonElement;
-      const progress = this.#container.querySelector('.carousel-progress') as SVGElement;
-
-      this.#gallery = new ProjectGallery([...slides], container, prev, next, progress);
-      this.#gallery.initializeGallery();
-    }
-  }
-}
 
 function initialize() {
   // override CSS to prevent native scrolling

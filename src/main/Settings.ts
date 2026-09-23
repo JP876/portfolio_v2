@@ -37,7 +37,7 @@ const INITIAL_THEME = {
 class Settings implements Subject {
   static #instance: Settings | null = null;
   mode: 'light' | 'dark' = 'light';
-  theme: typeof INITIAL_THEME = this.#getTheme();
+  theme = this.#getTheme();
   #observers = new Map<string, Observer>();
 
   private constructor() {}
