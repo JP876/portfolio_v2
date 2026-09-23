@@ -1,5 +1,4 @@
 import gsap from 'gsap';
-
 import CarouselDraggable from '../Carousel/Draggable';
 import { GAP } from '../consts';
 
@@ -88,6 +87,10 @@ class ProjectGallery extends CarouselDraggable {
     });
 
     if (this.slides) {
+      // set initial opacity for slides
+      gsap.set(this.slides, {
+        opacity: (i) => (i === 0 ? 1 : 0.4),
+      });
       this.slides.forEach((slide, i) => {
         slide.addEventListener('click', () => this.toIndex(i, { duration: 1, ease: 'expo' }));
       });

@@ -53,13 +53,10 @@ class Grid extends Canvas {
       };
     }
 
-    window.addEventListener(
-      'resize',
-      throttle(() => {
-        this.onResize();
-        if (options?.onResize) options.onResize();
-      })
-    );
+    window.addEventListener('resize', () => {
+      this.onResize();
+      if (options?.onResize) options.onResize();
+    });
 
     if (this.container) {
       // this.container.addEventListener('mousemove', throttle(this.onMouseMove.bind(this), 200));

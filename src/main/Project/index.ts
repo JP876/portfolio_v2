@@ -1,9 +1,10 @@
-import ProjectGallery from '../ProjectGallery';
+import ProjectGallery from './Gallery';
 import RevealText from '../RevealText';
 import ProjectBorder from './Border';
 import Settings from '../Settings';
+import type { Observer, Subject } from '../types';
 
-class Project {
+class Project implements Observer {
   #container: HTMLElement | null = null;
   #border: ProjectBorder | null = null;
   #description: RevealText | null = null;
@@ -37,6 +38,8 @@ class Project {
       this.#gallery.initializeGallery();
     }
   }
+
+  update(_: { type: string; instance: Subject }): void {}
 }
 
 export default Project;

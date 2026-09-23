@@ -2,8 +2,10 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { SplitText } from 'gsap/SplitText';
 
-const DEFAULT_COLOR = '#a0a0a0'; // grey
-const DIV_HIGHLIGHT = '#000000'; // black
+import Settings from './Settings';
+
+const DEFAULT_COLOR = Settings.instance.theme.grey[400];
+const DIV_HIGHLIGHT = Settings.instance.theme.grey[900];
 
 export type RevealTextConfig = {
   highlightColor?: string;

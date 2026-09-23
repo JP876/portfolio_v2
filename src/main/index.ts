@@ -14,22 +14,14 @@ import Project from './Project';
 
 gsap.registerPlugin(ScrollTrigger, Draggable, InertiaPlugin, SplitText, CSSRulePlugin);
 
-function initialize() {
-  // override CSS to prevent native scrolling
-  gsap.set('.carousel', {
-    'scroll-snap-type': 'none',
-    overflow: 'hidden',
-    gap: GAP,
-  });
-  // display the prev / next buttons
-  gsap.set('.carousel-nav, .carousel-progress', {
-    display: 'block',
-  });
-  // set initial opacity for slides
-  gsap.set('.carousel-slide', {
-    opacity: (i) => (i === 0 ? 1 : 0.4),
-  });
+// override CSS to prevent native scrolling
+gsap.set('.carousel', {
+  'scroll-snap-type': 'none',
+  overflow: 'hidden',
+  gap: GAP,
+});
 
+function initialize() {
   const isMobile = 'ontouchstart' in window;
   const mediaQuery = new MediaQuery();
 
@@ -85,6 +77,7 @@ function initialize() {
     for (const section of projectSections) {
       if (section) {
         const project = new Project(section);
+        Settings.instance.attach(section.id, project);
         project.init();
       }
     }
