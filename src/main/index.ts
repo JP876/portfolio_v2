@@ -35,10 +35,12 @@ function initialize() {
     const a = document.createElement('a');
     a.href = 'mailto:popovic_josip@protonmail.com';
 
-    const emailBtn = document.getElementById('email-btn') as HTMLButtonElement;
-    emailBtn.addEventListener('click', () => {
-      a.click();
-    });
+    const emailBtns = document.querySelectorAll<HTMLButtonElement>('#email-btn');
+    for (const btn of emailBtns) {
+      btn.addEventListener('click', () => {
+        a.click();
+      });
+    }
   }
 
   {
