@@ -1,6 +1,6 @@
 import Canvas from '.';
 import type { GridOptions } from './types';
-import { getRandomFloat, getRandomInt, getRandomNumArray, throttle } from '../utils';
+import { getRandomFloat, getRandomInt, getRandomNumArray } from '../utils';
 import Settings from '../Settings';
 
 type PostionType = { x: number; y: number };

@@ -508,7 +508,19 @@
   .project-title {
     font-size: var(--font-size-heading-lg);
     letter-spacing: 1px;
-    display: inline-block;
+    display: inline;
+    position: relative;
+    width: fit-content;
+
+    svg {
+      position: absolute;
+      bottom: -1.8rem;
+      left: -0.5rem;
+
+      path {
+        stroke: var(--text-brand-dark);
+      }
+    }
   }
 
   .project-description {
