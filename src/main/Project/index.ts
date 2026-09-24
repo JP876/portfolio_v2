@@ -37,11 +37,11 @@ class Project implements Observer {
       })
       .fromTo(
         this.#underline.path,
-        { opacity: 0 },
+        { attr: { d: 'M0 10' } },
         {
           attr: { d: this.#underline.getPathD() },
-          opacity: 1,
           ease: 'power2.in',
+          duration: 0.6,
         }
       );
 

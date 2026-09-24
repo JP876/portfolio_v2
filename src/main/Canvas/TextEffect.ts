@@ -95,10 +95,10 @@ class TextEffect extends Canvas implements Observer {
         this.setOptions = { fontSize: 80, letterSpacing: '2px' };
         break;
       case 'md':
-        this.setOptions = { fontSize: 100, letterSpacing: '2px' };
+        this.setOptions = { fontSize: 96, letterSpacing: '2px' };
         break;
       default:
-        this.setOptions = { fontSize: 120, letterSpacing: '4px' };
+        this.setOptions = { fontSize: 112, letterSpacing: '4px' };
     }
   }
 

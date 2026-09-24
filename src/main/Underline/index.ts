@@ -4,6 +4,10 @@ import { getRandomInt } from '../utils';
 
 export type TUnderlineOptions = {
   overflowX?: number;
+  moveY?: number;
+  curveX?: number;
+  curveY?: number;
+  endY?: number;
 };
 
 const DEFAULT_OPTIONS = {
@@ -11,23 +15,25 @@ const DEFAULT_OPTIONS = {
 };
 
 class Underline {
-  #parentEl: HTMLHeadingElement | null = null;
+  #parentEl: HTMLElement | null = null;
   #canvas = document.createElement('canvas');
   #ctx = this.#canvas.getContext('2d')!;
   #svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   #path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
   #textWidth: number = 0;
   #options: TUnderlineOptions = {};
-  #pathDOptions = {
-    moveY: getRandomInt(5, 10),
-    curveX: getRandomInt(40, 80),
-    curveY: getRandomInt(-4, 4),
-    endY: getRandomInt(10, 20),
-  };
+  #pathDOptions = { moveY: 0, curveX: 0, curveY: 0, endY: 0 };
 
-  constructor(parentEl: HTMLHeadingElement, options?: TUnderlineOptions) {
+  constructor(parentEl: HTMLElement, options?: TUnderlineOptions) {
     this.#parentEl = parentEl;
     this.#options = options || {};
+
+    this.#pathDOptions = {
+      moveY: this.#options?.moveY ?? getRandomInt(5, 10),
+      curveX: this.#options?.curveX ?? getRandomInt(40, 80),
+      curveY: this.#options?.curveY ?? getRandomInt(-5, 5),
+      endY: this.#options?.endY ?? getRandomInt(5, 15),
+    };
 
     this.#svg.setAttribute('height', '30');
     this.#svg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');

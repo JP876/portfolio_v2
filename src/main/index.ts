@@ -83,6 +83,14 @@ function initialize() {
     }
   }
 
+  {
+    const footer = document.querySelector('footer') as HTMLElement;
+    const footerGrid = new Grid(footer, { animate: {} });
+
+    footerGrid.initGrid();
+    footerGrid.canvas.style.zIndex = '-10';
+  }
+
   mediaQuery.notify();
   Settings.instance.notify();
 }
