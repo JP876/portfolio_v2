@@ -4,7 +4,6 @@ import type { Observer, Subject } from '../types';
 import ProjectGallery from './Gallery';
 import RevealText from '../RevealText';
 import ProjectBorder from './Border';
-import Settings from '../Settings';
 import Underline from '../Underline';
 
 class Project implements Observer {
@@ -36,19 +35,19 @@ class Project implements Observer {
         },
       })
       .fromTo(
-        this.#underline.path,
-        { attr: { d: 'M0 10' } },
+        this.#underline.svg,
+        { width: 0, opacity: 0 },
         {
-          attr: { d: this.#underline.getPathD() },
-          ease: 'power2.in',
-          duration: 0.6,
-        }
+          width: this.#underline.svgWidth,
+          ease: 'power4.out',
+          duration: 0.4,
+          opacity: 1,
+        },
+        0
       );
 
     const descriptionEl = this.#container.querySelector('.project-description') as HTMLElement;
-    this.#description = new RevealText(descriptionEl.parentElement!, descriptionEl, {
-      highlightColor: Settings.instance.theme.primary.main,
-    });
+    this.#description = new RevealText(descriptionEl.parentElement!, descriptionEl);
     this.#description.initialize();
 
     const container = this.#container.querySelector<HTMLElement>('.carousel');

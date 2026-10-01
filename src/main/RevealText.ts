@@ -2,11 +2,6 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { SplitText } from 'gsap/SplitText';
 
-import Settings from './Settings';
-
-const DEFAULT_COLOR = Settings.instance.theme.grey[400];
-const DIV_HIGHLIGHT = Settings.instance.theme.grey[900];
-
 export type RevealTextConfig = {
   highlightColor?: string;
   defaultColor?: string;
@@ -15,30 +10,37 @@ export type RevealTextConfig = {
 };
 
 class RevealText {
-  private container: Element | HTMLElement | string | null = null;
-  private text: Element | HTMLElement | string | null = null;
+  private container: HTMLElement | null = null;
+  private text: HTMLElement | null = null;
+  private textStyles: CSSStyleDeclaration | null = null;
   private scrollTrigger: ScrollTrigger | null = null;
   private splitText: SplitText | null = null;
   private tl: GSAPTimeline = gsap.timeline();
   private config: RevealTextConfig = {};
 
-  constructor(
-    container: Element | HTMLElement | string,
-    text: Element | HTMLElement | string,
-    config: RevealTextConfig
-  ) {
+  constructor(container: HTMLElement, text: HTMLElement, config?: RevealTextConfig) {
     this.container = container;
     this.text = text;
-    this.config = {
-      ...config,
-      defaultColor: config?.defaultColor || DEFAULT_COLOR,
-      revealColor: config?.revealColor || DIV_HIGHLIGHT,
-    };
+    this.textStyles = getComputedStyle(this.text);
+    this.setDefaultConfig(config);
   }
 
   set updateConfig(config: RevealTextConfig) {
     this.config = { ...this.config, ...config };
     this.initialize();
+  }
+
+  private setDefaultConfig(config?: RevealTextConfig) {
+    if (!this.textStyles) {
+      return null;
+    }
+    this.config = {
+      ...config,
+      highlightColor:
+        config?.highlightColor || this.textStyles.getPropertyValue('--project-description-highlight-color'),
+      defaultColor: config?.defaultColor || this.textStyles.getPropertyValue('--project-description-default-color'),
+      revealColor: config?.revealColor || this.textStyles.getPropertyValue('--project-description-reveal-color'),
+    };
   }
 
   initialize() {
@@ -54,15 +56,16 @@ class RevealText {
     this.splitText.chars.forEach((word, index) => {
       this.tl.call(this.animateWord.bind(this), [word], index + 0.01);
     });
-    this.tl.set({}, {}, '+=0.01');
+    this.tl.set({}, {}, '+=0.1');
 
     this.scrollTrigger = ScrollTrigger.create({
-      start: 'top 100%',
+      start: 'top 98%',
       end: 'bottom 90%',
       ...(this.config?.scrollTriggerOptions || {}),
       scrub: true,
       animation: this.tl,
       trigger: this.container,
+      // markers: true,
     });
   }
 

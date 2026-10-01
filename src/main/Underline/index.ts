@@ -56,6 +56,10 @@ class Underline {
     return this.#svg;
   }
 
+  get svgWidth() {
+    return (this.#textWidth + (this.#options?.overflowX ?? DEFAULT_OPTIONS.overflowX)).toString();
+  }
+
   #setTextWidth() {
     const inputText = this.#parentEl!.innerText;
 
@@ -67,7 +71,7 @@ class Underline {
     this.#textWidth = +this.#ctx.measureText(inputText).width.toFixed(2);
   }
 
-  getPathD() {
+  #getPathD() {
     const { moveY, curveX, curveY, endY } = this.#pathDOptions;
     const w = this.#textWidth + (this.#options?.overflowX ?? DEFAULT_OPTIONS.overflowX);
     return `M0 ${moveY} Q ${curveX} ${curveY} ${w} ${endY}`;
@@ -82,11 +86,8 @@ class Underline {
 
   update() {
     this.#setTextWidth();
-    this.#svg.setAttribute(
-      'width',
-      (this.#textWidth + (this.#options?.overflowX ?? DEFAULT_OPTIONS.overflowX)).toString()
-    );
-    this.#path.setAttribute('d', this.getPathD());
+    this.#svg.setAttribute('width', this.svgWidth);
+    this.#path.setAttribute('d', this.#getPathD());
   }
 }
 

@@ -79,18 +79,18 @@
 
 @layer base {
   :root {
-    --clr-white: hsl(0, 0%, 98%);
-    --clr-black: hsl(60, 4%, 5%);
+    --clr-white: #fafafa;
+    --clr-black: #0d0d0c;
 
-    --clr-grey-100: hsl(0, 4%, 95%);
-    --clr-grey-200: hsl(40, 4%, 85%);
-    --clr-grey-300: hsl(40, 5%, 75%);
-    --clr-grey-400: hsl(30, 4%, 65%);
-    --clr-grey-500: hsl(36, 4%, 55%);
-    --clr-grey-600: hsl(30, 4%, 45%);
-    --clr-grey-700: hsl(38, 4%, 35%);
-    --clr-grey-800: hsl(30, 5%, 25%);
-    --clr-grey-900: hsl(20, 4%, 15%);
+    --clr-grey-100: #f3f2f2;
+    --clr-grey-200: #dad9d7;
+    --clr-grey-300: #c2c0bc;
+    --clr-grey-400: #a9a6a2;
+    --clr-grey-500: #918d88;
+    --clr-grey-600: #77736e;
+    --clr-grey-700: #5d5a56;
+    --clr-grey-800: #43403d;
+    --clr-grey-900: #282625;
 
     --clr-blue-100: #c9defe;
     --clr-blue-200: #abcdfd;
@@ -532,8 +532,12 @@
   }
 
   .project-description {
+    --project-description-highlight-color: var(--text-brand);
+    --project-description-default-color: var(--clr-grey-400);
+    --project-description-reveal-color: var(--text-high-contrast);
+
     font-size: var(--font-size-regular);
-    color: var(--text-high-contrast);
+    color: var(--project-description-default-color);
   }
 
   .project-carousel {

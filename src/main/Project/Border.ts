@@ -23,7 +23,7 @@ class ProjectBorder {
         scrollTrigger: {
           trigger: this.#container,
           scrub: true,
-          start: 'top 92%',
+          start: 'top bottom',
           end: 'bottom 90%',
           // markers: true,
         },
