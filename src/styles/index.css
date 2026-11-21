@@ -81,12 +81,14 @@
   font-family: 'Corben';
   src: url('/Corben-Regular.ttf') format('truetype');
   font-weight: 400;
+  font-display: swap;
 }
 
 @font-face {
   font-family: 'Varel';
   src: url('/Varela-Regular.ttf') format('truetype');
   font-weight: 400;
+  font-display: optional;
 }
 
 @layer base {

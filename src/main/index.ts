@@ -12,18 +12,17 @@ import MediaQuery from './MediaQuery';
 import Settings from './Settings';
 import Project from './Project';
 
-gsap.registerPlugin(ScrollTrigger, Draggable, InertiaPlugin, SplitText, CSSRulePlugin);
-
-// override CSS to prevent native scrolling
-gsap.set('.carousel', {
-  'scroll-snap-type': 'none',
-  overflow: 'hidden',
-  gap: GAP,
-});
-
 function initialize() {
   const isMobile = 'ontouchstart' in window;
   const mediaQuery = new MediaQuery();
+
+  gsap.registerPlugin(ScrollTrigger, Draggable, InertiaPlugin, SplitText, CSSRulePlugin);
+  // override CSS to prevent native scrolling
+  gsap.set('.carousel', {
+    'scroll-snap-type': 'none',
+    overflow: 'hidden',
+    gap: GAP,
+  });
 
   {
     const buttons = document.querySelectorAll('.button');

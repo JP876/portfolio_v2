@@ -6,6 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/src/styles/index.css" />
     <title>Josip Popović portfolio</title>
+    <meta
+      name="description"
+      content="Full-stack developer portfolio showcasing high-performance web applications using React, Typescript, NestJS and Express.js"
+    />
   </head>
 
   <body>
@@ -39,16 +43,32 @@
         <div class="project-carousel">
           <div class="carousel" aria-label="Horizontal carousel of images">
             <div class="carousel-slide">
-              <img loading="lazy" src="/projects/weather_sphere_1.webp" />
+              <img
+                loading="lazy"
+                alt="WeatherSphere Dashboard: An interactive 3D globe visualization paired with a sidebar listing global cities, their coordinates, and current local times."
+                src="/projects/weather_sphere_1.webp"
+              />
             </div>
             <div class="carousel-slide">
-              <img loading="lazy" src="/projects/weather_sphere_2.webp" />
+              <img
+                loading="lazy"
+                alt="WeatherSphere Detail View: A dashboard for London showing current temperature, humidity, and UV index, with organized hourly and daily forecast cards."
+                src="/projects/weather_sphere_2.webp"
+              />
             </div>
             <div class="carousel-slide">
-              <img loading="lazy" src="/projects/weather_sphere_3.webp" />
+              <img
+                loading="lazy"
+                alt="WeatherSphere Comparison: A dual-panel view showing weather data for London on the left and Madrid on the right, highlighting the application's multi-city tracking capabilities."
+                src="/projects/weather_sphere_3.webp"
+              />
             </div>
             <div class="carousel-slide">
-              <img loading="lazy" src="/projects/weather_sphere_4.webp" />
+              <img
+                loading="lazy"
+                alt="WeatherSphere Settings Menu: A modal interface allowing users to customize units of measurement, date formats, and specific city item display settings."
+                src="/projects/weather_sphere_4.webp"
+              />
             </div>
           </div>
 
@@ -62,8 +82,8 @@
           </svg>
         </div>
 
-        <div>
-          <p class="project-description">
+        <div class="project-description" role="group">
+          <p>
             A full-stack web application that combines 3D graphics with real-time weather forecasting. The frontend is
             built with <span id="highlight">React</span> and <span id="highlight">TypeScript</span>, utilizing Jotai for
             reactive state management to handle synchronized city selections and real-time weather updates. The 3D globe
@@ -114,22 +134,46 @@
         <div class="project-carousel">
           <div class="carousel" aria-label="Horizontal carousel of images">
             <div class="carousel-slide">
-              <img loading="lazy" src="/projects/log_my_trades_1.webp" />
+              <img
+                loading="lazy"
+                alt="TradingJournal Dashboard: A comprehensive overview featuring a Trading Summary table, an Account Performance line chart, and bar charts for consecutive trades and trade durations."
+                src="/projects/log_my_trades_1.webp"
+              />
             </div>
             <div class="carousel-slide">
-              <img loading="lazy" src="/projects/log_my_trades_2.webp" />
+              <img
+                loading="lazy"
+                alt="TradingJournal Trades Table: A detailed history of trades showing currency pairs, direction, win/loss results with color-coded badges, and key price metrics."
+                src="/projects/log_my_trades_2.webp"
+              />
             </div>
             <div class="carousel-slide">
-              <img loading="lazy" src="/projects/log_my_trades_3.webp" />
+              <img
+                loading="lazy"
+                alt="TradingJournal Add Trade Modal: A comprehensive form for logging new trades, including fields for position size, entry/exit prices, stop-loss/take-profit levels, and custom tags."
+                src="/projects/log_my_trades_3.webp"
+              />
             </div>
             <div class="carousel-slide">
-              <img loading="lazy" src="/projects/log_my_trades_4.webp" />
+              <img
+                loading="lazy"
+                alt="TradingJournal Import Trades: A CSV upload interface featuring a field mapping table to align external data columns with the application's internal schema."
+                src="/projects/log_my_trades_4.webp"
+              />
             </div>
             <div class="carousel-slide">
-              <img loading="lazy" src="/projects/log_my_trades_5.webp" />
+              <img
+                loading="lazy"
+                alt="TradingJournal Settings: A configuration modal allowing users to customize units of measurement, date formats, and interactive mouse click actions."
+                src="/projects/log_my_trades_5.webp"
+              />
             </div>
             <div class="carousel-slide">
-              <img loading="lazy" src="/projects/log_my_trades_6.webp" />
+              <img
+                loading="lazy"
+                alt="LogMyTrades Login Screen: A dark-themed welcome page featuring a secure email/password authentication form and a dedicated Guest Login button."
+                src="/projects/log_my_trades_6.webp"
+              />
             </div>
           </div>
 
@@ -143,24 +187,26 @@
           </svg>
         </div>
 
-        <div>
-          <p class="project-description">
-            This is a full-stack trading journal designed for deep performance analysis and rigorous back-testing.
-            Utilizing <span id="highlight">React</span> and <span id="highlight">TypeScript</span> for a dynamic
-            frontend, the system provides actionable insights through visualizations of P&L trends, win rates, and trade
-            duration. The backend is powered by <span id="highlight">NestJS</span> and backed by
-            <span id="highlight">SQLite</span>, ensuring reliable data handling and automated logging. Core features
-            include granular trade logging, automated CSV data ingestion, and a flexible Guest Mode for immediate
-            application exploration.
+        <div class="project-description" role="group">
+          <p>
+            A robust, full-stack trading journal engineered for deep performance analysis and rigorous back-testing.
+            Built with <span id="highlight">React</span> and <span id="highlight">TypeScript</span>, the application
+            utilizes Jotai for client-side state management and <span id="highlight">React Query</span> for efficient
+            server-state synchronization and data fetching. The system features a dual-persistence architecture:
+            registered users utilize a server-side stack consisting of <span id="highlight">NestJS</span>,
+            <span id="highlight">Sequelize</span>, and <span id="highlight">SQLite</span>, while the Guest Mode employs
+            a local-first approach using <span id="highlight">Dexie</span> (IndexedDB) for high-performance persistent
+            storage. Core functionalities include granular trade logging, automated data export, and a sample-data
+            injection system designed to provide an immediate, content-rich dashboard experience.
           </p>
         </div>
 
         <div class="project-footer">
           <div class="project-tags">
+            <p>Typescript</p>
             <p>React</p>
             <p>React Query</p>
-            <p>Typescript</p>
-            <p>IndexedDB</p>
+            <p>Dexie.js</p>
             <p>Nest.js</p>
             <p>Sequelize</p>
             <p>SQLite</p>
@@ -180,7 +226,7 @@
               class="button"
               data-size="small"
               data-color="secondary"
-              href="https://trading-juornal.onrender.com"
+              href="https://log-my-trades.onrender.com/"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -193,8 +239,8 @@
       <section class="project" id="third-project-section">
         <h2 class="project-title">Portfolio</h2>
 
-        <div>
-          <p class="project-description">
+        <div class="project-description" role="group">
+          <p>
             Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
             dolore magna aliquyam erat, <span id="highlight">sed diam voluptua</span>. At vero eos et accusam et justo
             duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
