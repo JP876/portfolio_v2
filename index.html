@@ -4,15 +4,8 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
     <link rel="stylesheet" href="/src/styles/index.css" />
-
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Varela&display=swap" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Corben&display=swap" rel="stylesheet" />
-
-    <title>portfolio_v2</title>
+    <title>Josip Popović portfolio</title>
   </head>
 
   <body>
@@ -71,11 +64,15 @@
 
         <div>
           <p class="project-description">
-            WeatherSphere is an interactive weather forecasting web application built with
-            <span id="highlight">TypeScript</span>, <span id="highlight">React</span>, Three.js, and Express. It allows
-            users to search for and select cities from around the world. The application presents current weather
-            conditions, including temperature, humidity, wind, visibility, and other atmospheric details. Users can also
-            explore hourly and daily forecasts through compact cards and data tables.
+            A full-stack web application that combines 3D graphics with real-time weather forecasting. The frontend is
+            built with <span id="highlight">React</span> and <span id="highlight">TypeScript</span>, utilizing Jotai for
+            reactive state management to handle synchronized city selections and real-time weather updates. The 3D globe
+            is rendered using <span id="highlight">Three.js</span>, leveraging custom shaders to handle atmospheric
+            effects and surface rendering. To manage the data pipeline, an
+            <span id="highlight">Express.js</span> backend acts as a proxy layer for the OpenWeather API, handling
+            request routing and data normalization. The application delivers comprehensive metrics—including wind,
+            humidity, and visibility—presented through a combination of visual cards and structured data tables for
+            hourly and daily forecasts.
           </p>
         </div>
 
@@ -148,18 +145,24 @@
 
         <div>
           <p class="project-description">
-            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
-            dolore magna aliquyam erat, <span id="highlight">sed diam voluptua</span>. At vero eos et accusam et justo
-            duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam.
+            This is a full-stack trading journal designed for deep performance analysis and rigorous back-testing.
+            Utilizing <span id="highlight">React</span> and <span id="highlight">TypeScript</span> for a dynamic
+            frontend, the system provides actionable insights through visualizations of P&L trends, win rates, and trade
+            duration. The backend is powered by <span id="highlight">NestJS</span> and backed by
+            <span id="highlight">SQLite</span>, ensuring reliable data handling and automated logging. Core features
+            include granular trade logging, automated CSV data ingestion, and a flexible Guest Mode for immediate
+            application exploration.
           </p>
         </div>
 
         <div class="project-footer">
           <div class="project-tags">
-            <p>Typescript</p>
             <p>React</p>
+            <p>React Query</p>
+            <p>Typescript</p>
+            <p>IndexedDB</p>
             <p>Nest.js</p>
+            <p>Sequelize</p>
             <p>SQLite</p>
           </div>
 

@@ -77,6 +77,18 @@
   }
 }
 
+@font-face {
+  font-family: 'Corben';
+  src: url('/Corben-Regular.ttf') format('truetype');
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'Varel';
+  src: url('/Varela-Regular.ttf') format('truetype');
+  font-weight: 400;
+}
+
 @layer base {
   :root {
     --clr-white: #fafafa;
@@ -561,6 +573,7 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    flex-wrap: wrap;
     align-items: center;
     gap: var(--sizing-xs);
 
