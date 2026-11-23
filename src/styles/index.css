@@ -1,3 +1,17 @@
+@font-face {
+  font-family: 'Corben';
+  src: url('/Corben-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Varel';
+  src: url('/Varela-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-display: optional;
+}
+
 @layer reset {
   *,
   *::before,
@@ -77,20 +91,6 @@
   }
 }
 
-@font-face {
-  font-family: 'Corben';
-  src: url('/Corben-Regular.ttf') format('truetype');
-  font-weight: 400;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Varel';
-  src: url('/Varela-Regular.ttf') format('truetype');
-  font-weight: 400;
-  font-display: optional;
-}
-
 @layer base {
   :root {
     --clr-white: #fafafa;
@@ -131,7 +131,7 @@
     --ff-heading: 'Corben', serif;
     --ff-body: 'Varela', sans-serif;
 
-    --fs-xs: clamp(0.7rem, 1.6vw, 0.8rem);
+    --fs-xs: clamp(0.8rem, 1.6vw, 0.9rem);
     --fs-sm: clamp(0.86rem, 2vw, 1.14rem);
     --fs-md: clamp(1.2rem, 2vw + 0.4rem, 1.4rem);
     --fs-lg: clamp(1.8rem, 2.4vw + 1rem, 2.4rem);
@@ -554,6 +554,11 @@
     color: var(--project-description-default-color);
   }
 
+  .project-note {
+    font-size: var(--font-size-sm);
+    color: var(--clr-grey-600);
+  }
+
   .project-carousel {
     --project-carousel-height: min(16rem, 48vw);
     --project-carousel-margin-bottom: var(--sizing-md);
@@ -626,5 +631,64 @@
     span {
       color: var(--text-brand-dark);
     }
+  }
+}
+
+@layer utilities {
+  [hidden] {
+    display: none;
+  }
+
+  .visually-hidden {
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+  }
+
+  .text-center {
+    text-align: center;
+  }
+  .text-brand {
+    color: var(--text-brand);
+  }
+  .text-high-contrast {
+    color: var(--text-high-contrast);
+  }
+
+  .background-base {
+    background-color: var(--background-main);
+  }
+  .background-light {
+    background-color: var(--background-light);
+  }
+  .background-extra-light {
+    background-color: var(--background-extra-light);
+  }
+  .background-dark {
+    background-color: var(--background-dark);
+  }
+  .background-extra-dark {
+    background-color: var(--background-extra-dark);
+  }
+
+  .background-accent {
+    background-color: var(--background-accent-dark);
+  }
+
+  .font-size-sm {
+    font-size: var(--font-size-sm);
+  }
+  .font-size-regular {
+    font-size: var(--font-size-regular);
+  }
+  .font-size-md {
+    font-size: var(--font-size-md);
+  }
+  .font-size-lg {
+    font-size: var(--font-size-lg);
   }
 }
